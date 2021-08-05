@@ -1,20 +1,18 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <input type="text" v-model="game">
-    <button v-on:click="gameIndex">CLICK ME</button>
-    <p><img v-bind:src="games.image_url"></p>
-    {{ games.title }}
-    
-    <!-- <div v-for="game in games"> -->
-      <!-- <h1>{{ game.title }}</h1> -->
-      <hr>
+    <div>
+      <input type="text" v-model="search"><button v-on:click="searchGame">search</button>
+      </div>
+    <div v-for="game in games">
+      <h1>{{ game.name }}</h1>
+        <p><img
+          v-if="game.cover"
+          :src="game.cover.url.replace('t_thumb', 't_1080p')"
+          :alt="game.name">
+        <img v-else src="/no_image_found.jpeg" /></p>
+        <hr>
     </div>
-    <!-- <div v-for="game in games">
-      <img v-bind:src="game.thumb">
-      <p>{{ game.title }}</p>
-      <hr>
-    </div> -->
   </div>
 </template>
 
@@ -29,17 +27,17 @@ import axios from "axios";
 export default {
   data: function () {
     return {
-      message: "Welcome to Shopkeep.gg",
+      message: "Welcome to Shopkeeper.gg",
       games: [],
-      game: "",
+      seach: "",
     };
   },
   created: function () {
-    this.gameIndex();
+    // this.gameIndex();
   },
   methods: {
-    gameIndex: function () {
-      axios.get("/games/183206").then((response) => {
+    searchGame: function () {
+      axios.post("/games", { search: this.search }).then((response) => {
         this.games = response.data;
         console.log(response.data);
       });
