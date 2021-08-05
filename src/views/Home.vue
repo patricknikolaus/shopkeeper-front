@@ -1,17 +1,28 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <div v-for="game in games">
-      <p><img v-bind:src="game.image_url"></p>
-      <h1>{{ game.title }}</h1>
-      <p>{{ game.details }}</p>
-      <p>{{ game.rating }}/10</p>
+    <input type="text" v-model="game">
+    <button v-on:click="gameIndex">CLICK ME</button>
+    <p><img v-bind:src="games.image_url"></p>
+    {{ games.title }}
+    
+    <!-- <div v-for="game in games"> -->
+      <!-- <h1>{{ game.title }}</h1> -->
       <hr>
     </div>
+    <!-- <div v-for="game in games">
+      <img v-bind:src="game.thumb">
+      <p>{{ game.title }}</p>
+      <hr>
+    </div> -->
   </div>
 </template>
 
-<style></style>
+<style>
+img {
+  width: 200px;
+}
+</style>
 
 <script>
 import axios from "axios";
@@ -20,6 +31,7 @@ export default {
     return {
       message: "Welcome to Shopkeep.gg",
       games: [],
+      game: "",
     };
   },
   created: function () {
@@ -27,9 +39,9 @@ export default {
   },
   methods: {
     gameIndex: function () {
-      axios.get("/games").then((response) => {
-        console.log(response.data);
+      axios.get("/games/183206").then((response) => {
         this.games = response.data;
+        console.log(response.data);
       });
     },
   },
