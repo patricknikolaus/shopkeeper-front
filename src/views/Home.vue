@@ -5,13 +5,18 @@
       <input type="text" v-model="search"><button v-on:click="searchGame">search</button>
       </div>
     <div v-for="game in games">
-      <h1>{{ game.name }}</h1>
-        <p><img
-          v-if="game.cover"
-          :src="game.cover.url.replace('t_thumb', 't_1080p')"
-          :alt="game.name">
-        <img v-else src="/no_image_found.jpeg" /></p>
-        <hr>
+        <h1>{{ game.name }}</h1>
+          <p><router-link v-bind:to="`/games/${game.id}`"><img
+            v-if="game.cover"
+            :src="game.cover.url.replace('t_thumb', 't_1080p')"
+            :alt="game.name">
+          <img v-else src="/no_image_found.jpeg" /></router-link></p>
+          <div v-for="genre in game.genres">
+          <p>{{ genre.name }}</p>
+          <!-- <p><button v-on:click="gameShow">More Info</button></p> -->
+          </div>
+          <hr>
+      </div>
     </div>
   </div>
 </template>
@@ -29,12 +34,10 @@ export default {
     return {
       message: "Welcome to Shopkeeper.gg",
       games: [],
-      seach: "",
+      search: "",
     };
   },
-  created: function () {
-    // this.gameIndex();
-  },
+  created: function () {},
   methods: {
     searchGame: function () {
       axios.post("/games", { search: this.search }).then((response) => {
