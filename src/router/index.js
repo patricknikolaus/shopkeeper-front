@@ -5,6 +5,7 @@ import GameShow from '../views/GameShow.vue'
 import Signup from '../views/Signup.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
+import Wishlist from '../views/Wishlist.vue'
 
 
 Vue.use(VueRouter)
@@ -21,12 +22,17 @@ const routes = [
     component: GameShow
   },
   {
+    path: '/wishlists',
+    name: 'Wishlist',
+    component: Wishlist
+  },
+  {
     path: '/users',
     name: 'Signup',
     component: Signup
   },
   {
-    path: '/sessions',
+    path: '/login',
     name: 'Login',
     component: Login
   },

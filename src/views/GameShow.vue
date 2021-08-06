@@ -5,7 +5,7 @@
       <img v-if="game[0].cover" :src="game[0].cover.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="/no_image_found.jpeg" />
     </p>
     <h2>{{ game[0].name }}</h2>
-    <button>add to wishlist</button>
+    <button v-on:click="wishlistGame">add to wishlist</button>
     <p v-for="genre in game[0].genres">{{ genre.name }}</h2>
     <h2>{{ Math.round(game[0].rating) }}/100</h2>
     <h4>{{ game[0].summary }}</h4>
@@ -49,6 +49,14 @@ export default {
           console.log(response.data);
           this.prices = response.data;
         });
+    },
+    wishlistGame: function () {
+      axios.post("/wishlists", {
+        user_id: 1,
+        game_id: this.game[0].id,
+        image_url: this.game[0].cover.url,
+        title: this.game[0].name,
+      });
     },
   },
 };
