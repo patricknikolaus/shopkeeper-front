@@ -22,13 +22,13 @@ export default {
     return {
       message: "Game Show",
       game: [],
-      price: [],
+      prices: [],
       title: "",
     };
   },
+
   created: function () {
     this.gameShow();
-    this.gamePrice();
   },
   methods: {
     gameShow: function () {
@@ -36,17 +36,18 @@ export default {
         console.log(response.data);
         this.game = response.data;
         this.title = response.data[0].name.split(" ").join("").toLowerCase();
-        console.log(this.title);
+        this.gamePrice();
       });
     },
     gamePrice: function () {
       console.log("price");
       axios
-        .get(`https://www.cheapshark.com/api/1.0/deals?title=overwatch&exact=1`)
+        .get("https://www.cheapshark.com/api/1.0/deals", {
+          params: { title: this.title, exact: 1 },
+        })
         .then((response) => {
-          console.log(this.title);
           console.log(response.data);
-          this.price = response.data;
+          this.prices = response.data;
         });
     },
   },
