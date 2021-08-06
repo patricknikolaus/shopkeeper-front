@@ -36,6 +36,7 @@ export default {
         console.log(response.data);
         this.game = response.data;
         this.title = response.data[0].name.split(" ").join("").toLowerCase();
+        console.log(localStorage.user_id);
         this.gamePrice();
       });
     },
@@ -52,7 +53,7 @@ export default {
     },
     wishlistGame: function () {
       axios.post("/wishlists", {
-        user_id: 1,
+        user_id: localStorage.user_id,
         game_id: this.game[0].id,
         image_url: this.game[0].cover.url,
         title: this.game[0].name,

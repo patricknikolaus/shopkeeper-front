@@ -20,6 +20,7 @@ export default {
   data: function () {
     return {
       wishlist: [],
+      game: [],
     };
   },
   created: function () {
@@ -33,7 +34,7 @@ export default {
       });
     },
     removeGame: function () {
-      axios.delete(`/wishlists/${this.$route.params.id}`).then((response) => {
+      axios.delete(`/wishlists/5`).then((response) => {
         console.log(response.data);
         this.$router.push("/wishlists");
       });
