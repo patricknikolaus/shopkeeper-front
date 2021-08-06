@@ -35,6 +35,8 @@ export default {
     removeGame: function (game) {
       axios.delete(`/wishlists/${game.id}`).then((response) => {
         console.log(response.data);
+        let index = this.wishlist.indexOf(game);
+        this.wishlist.splice(index, 1);
       });
     },
   },

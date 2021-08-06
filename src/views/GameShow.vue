@@ -5,11 +5,19 @@
       <img v-if="game[0].cover" :src="game[0].cover.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="/no_image_found.jpeg" />
     </p>
     <h2>{{ game[0].name }}</h2>
-    <button v-on:click="wishlistGame">add to wishlist</button>
+    <button v-on:click="wishlistGame" >add to wishlist</button>
+    <dialog id="wishlist-add">
+      <form method="dialog">
+        <p>Game added to wishlist!</p>
+        <button>X</button>
+      </form>
+    </dialog>
     <p v-for="genre in game[0].genres">{{ genre.name }}</h2>
     <h2>{{ Math.round(game[0].rating) }}/100</h2>
     <h4>{{ game[0].summary }}</h4>
-    <p v-for="similar in game[0].similar_games">{{ similar.name }}</p>
+    <div v-for="similar in game[0].similar_games">
+      <a v-bind:href="`/games/${similar.id}`">{{ similar.name }}</a>
+    </div>
   </div>
 </template>
 
@@ -58,6 +66,7 @@ export default {
         image_url: this.game[0].cover.url,
         title: this.game[0].name,
       });
+      document.querySelector("#wishlist-add").showModal();
     },
   },
 };
