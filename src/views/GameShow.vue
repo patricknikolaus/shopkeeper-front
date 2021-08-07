@@ -23,6 +23,9 @@
     <p v-for="genre in game[0].genres">{{ genre.name }}</h2>
       <h2>{{ Math.round(game[0].rating) }}/100</h2>
       <h4>{{ game[0].summary }}</h4>
+    <div v-for="video in videos">
+      <youtube :video-id="video.video_id"></youtube> 
+    </div> 
     <div v-for="screenshot in screenshots">
         <img v-if="screenshot.url" :src="screenshot.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
     </div>
@@ -61,6 +64,7 @@ export default {
       stores: [],
       screenshots: [],
       errors: [],
+      videos: [],
     };
   },
 
@@ -73,9 +77,11 @@ export default {
       axios.post(`/games/${this.$route.params.id}`).then((response) => {
         console.log(response.data);
         // console.log(response.data[0].screenshots);
+
         this.game = response.data;
         this.title = response.data[0].name.split(" ").join("").toLowerCase();
         this.screenshots = response.data[0].screenshots;
+        this.videos = response.data[0].videos;
         // console.log(localStorage.user_id);
         this.gamePrice();
         this.storeName();
