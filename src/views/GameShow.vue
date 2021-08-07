@@ -18,6 +18,15 @@
     <div v-for="similar in game[0].similar_games">
       <a v-bind:href="`/games/${similar.id}`">{{ similar.name }}</a>
     </div>
+    <div v-for="price in prices" v-bind="storeName(price)">
+      <h1>{{ price.storeID }}</h1>
+      <div v-if="price.isOnSale === '1'">
+        <h2>ON SALE</h2>
+         <h3><strike>{{ price.normalPrice }}</strike></h3> 
+         <h2>{{ price.salePrice }}</h2></div>
+      <div v-else><h3>{{ price.normalPrice }}</h3></div>
+      <hr>
+    </div>
   </div>
 </template>
 
@@ -67,6 +76,25 @@ export default {
         title: this.game[0].name,
       });
       document.querySelector("#wishlist-add").showModal();
+    },
+    storeName: function (price) {
+      if (price.storeID === "1") {
+        price.storeID = "Steam";
+      } else if (price.storeID === "7") {
+        price.storeID = "GOG";
+      } else if (price.storeID === "8") {
+        price.storeID = "Origin";
+      } else if (price.storeID === "11") {
+        price.storeID = "Humble";
+      } else if (price.storeID === "13") {
+        price.storeID = "Uplay";
+      } else if (price.storeID === "15") {
+        price.storeID = "Fanatical";
+      } else if (price.storeID === "25") {
+        price.storeID = "Epic";
+      } else if (price.storeID === "31") {
+        price.storeID = "Blizzard";
+      }
     },
   },
 };
