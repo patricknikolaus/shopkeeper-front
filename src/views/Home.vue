@@ -45,9 +45,7 @@ export default {
       deals: [],
     };
   },
-  created: function () {
-    // this.gameDeals();
-  },
+  created: function () {},
   methods: {
     searchGame: function () {
       axios.post("/games", { search: this.search }).then((response) => {
@@ -55,16 +53,6 @@ export default {
         console.log(response.data);
       });
     },
-    // gameDeals: function () {
-    //   axios
-    //     .get(
-    //       "https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15&pageSize=20"
-    //     )
-    //     .then((response) => {
-    //       console.log(response.data);
-    //       this.deals = response.data;
-    //     });
-    // },
   },
 };
 </script>

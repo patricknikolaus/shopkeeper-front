@@ -1,5 +1,6 @@
 <template>
   <div class="wishlist">
+    <h1>{{ message }}</h1>
     <div v-for="game in wishlist" v-bind:key="game.id">
       <p><router-link v-bind:to="`/games/${game.game_id}`"><img
             v-if="game.image_url"
@@ -20,6 +21,7 @@ export default {
   data: function () {
     return {
       wishlist: [],
+      message: "Wishlist Page",
     };
   },
   created: function () {
