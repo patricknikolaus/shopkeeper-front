@@ -2,13 +2,18 @@
   <div class="home">
     <h1>{{ message }}</h1>
     <p>
-      <img v-if="game[0].cover" :src="game[0].cover.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="/no_image_found.jpeg" />
+      <img v-if="game[0].cover" :src="game[0].cover.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
     </p>
     <h2>{{ game[0].name }}</h2>
-    <button v-on:click="wishlistGame" >add to wishlist</button>
+    <button v-on:click="wishlistGame">add to wishlist</button>
     <dialog id="wishlist-add">
       <form method="dialog">
-        <p>Game added to wishlist!</p>
+        <div v-if="this.errors.length === 1">
+          <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+        </div>
+        <div v-else>
+          <p>Game added to wishlist!</p>
+        </div>
         <button>X</button>
       </form>
     </dialog>
@@ -21,12 +26,16 @@
       <hr>
       <div v-for="price in prices">
         <div v-for="store in stores">
-        <p v-if="price.storeID === store.storeID">{{ store.storeName }}</p></div>
+          <div v-if="price.storeID === store.storeID">
+            <h2>{{ store.storeName }}</h2>
+          </div>
+        </div>
         <div v-if="price.isOnSale === '1'">
           <h2>ON SALE: {{ Math.round(price.savings) }}% OFF!</h2>
           <h3><strike>${{ price.normalPrice }}</strike></h3> 
-          <h2>${{ price.salePrice }}</h2></div>
-      <div v-else><h3>{{ price.normalPrice }}</h3></div>
+          <h2>${{ price.salePrice }}</h2>
+        </div>
+        <div v-else><h3>{{ price.normalPrice }}</h3></div>
        <hr>
     </div>
   </div>
@@ -44,6 +53,7 @@ export default {
       prices: [],
       title: "",
       stores: [],
+      errors: [],
     };
   },
 
@@ -73,12 +83,17 @@ export default {
         });
     },
     wishlistGame: function () {
-      axios.post("/wishlists", {
-        user_id: localStorage.user_id,
-        game_id: this.game[0].id,
-        image_url: this.game[0].cover.url,
-        title: this.game[0].name,
-      });
+      axios
+        .post("/wishlists", {
+          user_id: localStorage.user_id,
+          game_id: this.game[0].id,
+          image_url: this.game[0].cover.url,
+          title: this.game[0].name,
+        })
+        .catch((error) => {
+          console.log(error.response);
+          this.errors = ["Game is already on your wishlist!"];
+        });
       document.querySelector("#wishlist-add").showModal();
     },
     storeName: function () {
