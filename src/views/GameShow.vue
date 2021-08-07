@@ -13,19 +13,21 @@
       </form>
     </dialog>
     <p v-for="genre in game[0].genres">{{ genre.name }}</h2>
-    <h2>{{ Math.round(game[0].rating) }}/100</h2>
-    <h4>{{ game[0].summary }}</h4>
+      <h2>{{ Math.round(game[0].rating) }}/100</h2>
+      <h4>{{ game[0].summary }}</h4>
     <div v-for="similar in game[0].similar_games">
       <a v-bind:href="`/games/${similar.id}`">{{ similar.name }}</a>
     </div>
-    <div v-for="price in prices" v-bind="storeName(price)">
-      <h1>{{ price.storeID }}</h1>
-      <div v-if="price.isOnSale === '1'">
-        <h2>ON SALE</h2>
-         <h3><strike>{{ price.normalPrice }}</strike></h3> 
-         <h2>{{ price.salePrice }}</h2></div>
-      <div v-else><h3>{{ price.normalPrice }}</h3></div>
       <hr>
+      <div v-for="price in prices">
+        <div v-for="store in stores">
+        <p v-if="price.storeID === store.storeID">{{ store.storeName }}</p></div>
+        <div v-if="price.isOnSale === '1'">
+          <h2>ON SALE: {{ Math.round(price.savings) }}% OFF!</h2>
+          <h3><strike>${{ price.normalPrice }}</strike></h3> 
+          <h2>${{ price.salePrice }}</h2></div>
+      <div v-else><h3>{{ price.normalPrice }}</h3></div>
+       <hr>
     </div>
   </div>
 </template>
@@ -41,6 +43,7 @@ export default {
       game: [],
       prices: [],
       title: "",
+      stores: [],
     };
   },
 
@@ -55,6 +58,7 @@ export default {
         this.title = response.data[0].name.split(" ").join("").toLowerCase();
         console.log(localStorage.user_id);
         this.gamePrice();
+        this.storeName();
       });
     },
     gamePrice: function () {
@@ -77,24 +81,13 @@ export default {
       });
       document.querySelector("#wishlist-add").showModal();
     },
-    storeName: function (price) {
-      if (price.storeID === "1") {
-        price.storeID = "Steam";
-      } else if (price.storeID === "7") {
-        price.storeID = "GOG";
-      } else if (price.storeID === "8") {
-        price.storeID = "Origin";
-      } else if (price.storeID === "11") {
-        price.storeID = "Humble";
-      } else if (price.storeID === "13") {
-        price.storeID = "Uplay";
-      } else if (price.storeID === "15") {
-        price.storeID = "Fanatical";
-      } else if (price.storeID === "25") {
-        price.storeID = "Epic";
-      } else if (price.storeID === "31") {
-        price.storeID = "Blizzard";
-      }
+    storeName: function () {
+      axios
+        .get("https://www.cheapshark.com/api/1.0/stores")
+        .then((response) => {
+          console.log(response.data);
+          this.stores = response.data;
+        });
     },
   },
 };
