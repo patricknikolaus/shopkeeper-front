@@ -17,6 +17,9 @@
         <button>X</button>
       </form>
     </dialog>
+    <a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
+    <h2>Twith Streams</h2>
+    </a>
     <p v-for="genre in game[0].genres">{{ genre.name }}</h2>
       <h2>{{ Math.round(game[0].rating) }}/100</h2>
       <h4>{{ game[0].summary }}</h4>
@@ -63,28 +66,29 @@ export default {
 
   created: function () {
     this.gameShow();
+    this.twitchStream();
   },
   methods: {
     gameShow: function () {
       axios.post(`/games/${this.$route.params.id}`).then((response) => {
         console.log(response.data);
-        console.log(response.data[0].screenshots);
+        // console.log(response.data[0].screenshots);
         this.game = response.data;
         this.title = response.data[0].name.split(" ").join("").toLowerCase();
         this.screenshots = response.data[0].screenshots;
-        console.log(localStorage.user_id);
+        // console.log(localStorage.user_id);
         this.gamePrice();
         this.storeName();
       });
     },
     gamePrice: function () {
-      console.log("price");
+      // console.log("price");
       axios
         .get("https://www.cheapshark.com/api/1.0/deals", {
           params: { title: this.title, exact: 1 },
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           this.prices = response.data;
         });
     },
@@ -97,7 +101,7 @@ export default {
           title: this.game[0].name,
         })
         .catch((error) => {
-          console.log(error.response);
+          // console.log(error.response);
           this.errors = ["Game is already on your wishlist!"];
         });
       document.querySelector("#wishlist-add").showModal();
