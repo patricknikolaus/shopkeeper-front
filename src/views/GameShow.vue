@@ -17,9 +17,11 @@
         <button>X</button>
       </form>
     </dialog>
-    <a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
-    <h2>Twith Streams</h2>
-    </a>
+    <div>
+      <a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
+        <img class="twitchIcon" src="../assets/twitch.png"/>
+      </a> View gameplay on Twitch!
+    </div>
     <p v-for="genre in game[0].genres">{{ genre.name }}</h2>
       <h2>{{ Math.round(game[0].rating) }}/100</h2>
       <h4>{{ game[0].summary }}</h4>
@@ -28,7 +30,7 @@
       <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item" v-for="(video, index) in videos" :class="{ active: index===0}">
-            <youtube :video-id="video.video_id" player-width="320" player-height="190" class="d-block w-100"></youtube>
+            <youtube :video-id="video.video_id" player-width="640" player-height="375" class="d-block w-100"></youtube>
           </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -73,7 +75,8 @@
       <div v-for="price in prices">
         <div v-for="store in stores">
           <div v-if="price.storeID === store.storeID">
-            <h2>{{ store.storeName }}</h2>
+            <p><img :src="`https://www.cheapshark.com/`+ store.images.logo"></p>
+            {{ store.storeName }}
           </div>
         </div>
         <div v-if="price.isOnSale === '1'">
@@ -90,12 +93,18 @@
 
 <style>
 .screenshotCarousel {
-  width: 320px;
-  height: 190px;
+  width: 640px;
+  height: 375px;
+  align-content: center;
 }
 .videoCarousel {
-  width: 320px;
-  height: 190px;
+  width: 640px;
+  height: 375px;
+  align-content: center;
+}
+.twitchIcon {
+  width: 50px;
+  height: 50px;
 }
 </style>
 
@@ -163,7 +172,7 @@ export default {
       axios
         .get("https://www.cheapshark.com/api/1.0/stores")
         .then((response) => {
-          // console.log(response.data);
+          console.log(response.data);
           this.stores = response.data;
         });
     },
