@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>{{ message }}</h1>
+    <h1>Welcome to Shopkeeper.gg {{ username }}!</h1>
     <div>
       <input type="text" v-model="search"><button v-on:click="searchGame">search</button>
       </div>
@@ -43,15 +43,21 @@ export default {
       games: [],
       search: "",
       deals: [],
+      username: [],
     };
   },
-  created: function () {},
+  created: function () {
+    this.getUsername();
+  },
   methods: {
     searchGame: function () {
       axios.post("/games", { search: this.search }).then((response) => {
         this.games = response.data;
         console.log(response.data);
       });
+    },
+    getUsername: function () {
+      this.username = localStorage.username;
     },
   },
 };

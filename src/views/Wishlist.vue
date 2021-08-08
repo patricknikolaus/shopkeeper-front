@@ -1,6 +1,6 @@
 <template>
   <div class="wishlist">
-    <h1>{{ message }}</h1>
+    <h1>{{ username }}'s Wishlist</h1>
     <div v-for="game in wishlist" v-bind:key="game.id">
       <p><router-link v-bind:to="`/games/${game.game_id}`"><img
             v-if="game.image_url"
@@ -22,6 +22,7 @@ export default {
     return {
       wishlist: [],
       message: "Wishlist Page",
+      username: [],
     };
   },
   created: function () {
@@ -32,6 +33,7 @@ export default {
       axios.get("/wishlists").then((response) => {
         console.log(response.data);
         this.wishlist = response.data;
+        this.username = localStorage.username;
       });
     },
     removeGame: function (game) {

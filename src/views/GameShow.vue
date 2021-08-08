@@ -5,7 +5,8 @@
       <img v-if="game[0].cover" :src="game[0].cover.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
     </p>
     <h2>{{ game[0].name }}</h2>
-    <button v-on:click="wishlistGame">add to wishlist</button>
+    <!-- <button v-on:click="wishlistGame">add to wishlist</button> -->
+    <button type="button" class="btn btn-dark" v-on:click="wishlistGame">Wishlist Game</button>
     <dialog id="wishlist-add">
       <form method="dialog">
         <div v-if="this.errors.length === 1">

@@ -1,18 +1,20 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link v-if="!isLoggedIn()" to="/users">Sign Up</router-link> |
-      <router-link v-if="!isLoggedIn()" to="/login">Login</router-link> |
-      <router-link v-if="isLoggedIn()" to="/logout">Logout</router-link> |
-      <router-link v-if="isLoggedIn()" to="/wishlists">Wishlist</router-link>
+  <div class="container">
+    <div id="app">
+      <div id="nav">
+        <router-link to="/">Home</router-link> |
+        <router-link v-if="!isLoggedIn()" to="/users">Sign Up</router-link> |
+        <router-link v-if="!isLoggedIn()" to="/login">Login</router-link> |
+        <router-link v-if="isLoggedIn()" to="/logout">Logout</router-link> |
+        <router-link v-if="isLoggedIn()" to="/wishlists">Wishlist</router-link>
+      </div>
+      <router-view/>
     </div>
-    <router-view/>
   </div>
 </template>
 
 <style>
-/* #app {
+#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -20,7 +22,7 @@
   color: #2c3e50;
 }
 
-#nav {
+/* #nav {
   padding: 30px;
 }
 
