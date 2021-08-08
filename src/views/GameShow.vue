@@ -23,24 +23,44 @@
     <p v-for="genre in game[0].genres">{{ genre.name }}</h2>
       <h2>{{ Math.round(game[0].rating) }}/100</h2>
       <h4>{{ game[0].summary }}</h4>
-    <div class="videos" v-for="video in videos">
-      <youtube :video-id="video.video_id" player-width="320" player-height="185"></youtube> 
+
+    <div class="videoCarousel">
+      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item" v-for="(video, index) in videos" :class="{ active: index===0}">
+            <youtube :video-id="video.video_id" player-width="320" player-height="190" class="d-block w-100"></youtube>
+          </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     </div>
 
-    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item" v-for="(screenshot, index) in screenshots" :class="{ active: index===0}" data-bs-interval="4500">
-          <img :src="screenshot.url.replace('t_thumb', 't_1080p')" class="d-block w-25" alt="">
+    <!-- <div class="videos" v-for="video in videos">
+      <youtube :video-id="video.video_id" player-width="320" player-height="185"></youtube> 
+    </div> -->
+
+    <div class="screenshotCarousel">
+      <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item" v-for="(screenshot, index) in screenshots" :class="{ active: index===0}" data-bs-interval="4500">
+            <img :src="screenshot.url.replace('t_thumb', 't_1080p')" class="d-block w-100" alt="">
+          </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
-      <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button> -->
     </div>
 
     <!-- <div v-for="screenshot in screenshots">
@@ -63,14 +83,19 @@
         </div>
         <div v-else><h3>{{ price.normalPrice }}</h3></div>
         <hr>
+     </div>
     </div>
   </div>
 </template>
 
 <style>
-.screenshot {
+.screenshotCarousel {
   width: 320px;
-  height: 185px;
+  height: 190px;
+}
+.videoCarousel {
+  width: 320px;
+  height: 190px;
 }
 </style>
 
