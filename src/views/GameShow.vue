@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <p>
+    <p class="cover">
       <img v-if="game[0].cover" :src="game[0].cover.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
     </p>
     <h2>{{ game[0].name }}</h2>
@@ -23,12 +23,29 @@
     <p v-for="genre in game[0].genres">{{ genre.name }}</h2>
       <h2>{{ Math.round(game[0].rating) }}/100</h2>
       <h4>{{ game[0].summary }}</h4>
-    <div v-for="video in videos">
-      <youtube :video-id="video.video_id"></youtube> 
-    </div> 
-    <div v-for="screenshot in screenshots">
-        <img v-if="screenshot.url" :src="screenshot.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
+    <div class="videos" v-for="video in videos">
+      <youtube :video-id="video.video_id" player-width="320" player-height="185"></youtube> 
     </div>
+
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item" v-for="(screenshot, index) in screenshots" :class="{ active: index===0}" data-bs-interval="4500">
+          <img :src="screenshot.url.replace('t_thumb', 't_1080p')" class="d-block w-25" alt="">
+        </div>
+      </div>
+      <!-- <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button> -->
+    </div>
+
+    <!-- <div v-for="screenshot in screenshots">
+        <img class="screenshot" v-if="screenshot.url" :src="screenshot.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
+    </div> -->
     <div v-for="similar in game[0].similar_games">
       <a v-bind:href="`/games/${similar.id}`">{{ similar.name }}</a>
     </div>
@@ -50,7 +67,12 @@
   </div>
 </template>
 
-<style></style>
+<style>
+.screenshot {
+  width: 320px;
+  height: 185px;
+}
+</style>
 
 <script>
 import axios from "axios";
