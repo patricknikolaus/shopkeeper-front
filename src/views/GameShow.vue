@@ -62,7 +62,7 @@
     <div class="prices" v-for="price in prices">
       <div v-for="store in stores">
         <div v-if="price.storeID === store.storeID">
-          <a :href="store.link + game[0].name.split(' ').join('%20')"><img :src="`https://www.cheapshark.com/`+ store.images.logo"></a>
+          <a :href="store.link + game[0].name" target="_blank"><img :src="`https://www.cheapshark.com/`+ store.images.logo"></a>
           {{ store.storeName }}
         </div>
       </div>
