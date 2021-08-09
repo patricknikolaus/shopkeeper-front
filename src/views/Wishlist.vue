@@ -43,6 +43,7 @@ export default {
         this.wishlist.splice(index, 1);
       });
     },
+    wishlistOnSale: function () {},
   },
 };
 </script>
