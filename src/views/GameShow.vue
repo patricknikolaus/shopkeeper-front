@@ -97,6 +97,7 @@ export default {
       videos: [],
       boxart: [],
       similarGames: [],
+      onSale: 0,
     };
   },
   mounted: function () {},
@@ -106,7 +107,7 @@ export default {
   methods: {
     gameShow: function () {
       axios.post(`/games/${this.$route.params.id}`).then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         this.game = response.data;
         this.title = response.data[0].name.split(" ").join("").toLowerCase();
         this.screenshots = response.data[0].screenshots;
@@ -125,8 +126,9 @@ export default {
           params: { title: this.title, exact: 1 },
         })
         .then((response) => {
-          // console.log(response.data);
+          console.log(response.data);
           this.prices = response.data;
+          this.isOnSale();
         });
     },
     wishlistGame: function () {
@@ -136,6 +138,7 @@ export default {
           game_id: this.game[0].id,
           image_url: this.game[0].cover.url,
           title: this.game[0].name,
+          on_sale: this.onSale,
         })
         .catch((error) => {
           // console.log(error.response);
@@ -161,7 +164,7 @@ export default {
       // console.log(this.similarGames);
     },
     addStoreLinks: function () {
-      console.log("STORE LINKS");
+      // console.log("STORE LINKS");
       this.stores.forEach((store) => {
         if (store.storeID === "1") {
           store["link"] = "https://store.steampowered.com/search/?term=";
@@ -204,7 +207,14 @@ export default {
           store["link"] = "https://www.allyouplay.com/en/search?q=";
         }
       });
-      console.log(this.stores);
+      // console.log(this.stores);
+    },
+    isOnSale: function () {
+      this.prices.forEach((store) => {
+        if (store.isOnSale === "1") {
+          this.onSale = 1;
+        }
+      });
     },
   },
 };
