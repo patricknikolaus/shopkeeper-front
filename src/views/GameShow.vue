@@ -1,94 +1,80 @@
 <template>
   <div class="home">
     <h1>{{ message }}</h1>
-    <p class="cover">
+    <!-- COVER -->
+    <div class="cover">
       <img v-if="game[0].cover" :src="game[0].cover.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
-    </p>
-    <h2>{{ game[0].name }}</h2>
-    <!-- <button v-on:click="wishlistGame">add to wishlist</button> -->
-    <button type="button" class="btn btn-dark" v-on:click="wishlistGame">Wishlist Game</button>
-    <dialog id="wishlist-add">
-      <form method="dialog">
-        <div v-if="this.errors.length === 1">
-          <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
-        </div>
-        <div v-else>
-          <p>Game added to wishlist!</p>
-        </div>
-        <button>X</button>
-      </form>
-    </dialog>
-    <div>
+    </div>
+    <!-- END COVER -->
+    <!-- TITLE -->
+    <div class="title">
+      <h2>{{ game[0].name }}</h2>
+    </div>
+    <!-- END TITLE -->
+    <!-- WISHLIST BUTTON -->
+    <div class="wishlistButton">
+      <button v-on:click="wishlistGame">add to wishlist</button>
+      <dialog id="wishlist-add">
+        <form method="dialog">
+          <div v-if="this.errors.length === 1">
+            <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+          </div>
+          <div v-else>
+            <p>Game added to wishlist!</p>
+          </div>
+          <button>X</button>
+        </form>
+      </dialog>
+    </div>
+    <!-- END WISHLIST BUTTON -->
+    <!-- TWITCH -->
+    <div class="twitch">
       <a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
         <img class="twitchIcon" src="../assets/twitch.png"/>
       </a> View gameplay on Twitch!
     </div>
-    <p v-for="genre in game[0].genres">{{ genre.name }}</h2>
+    <!-- TWITCH END -->
+    <!-- GENRES -->
+    <div class="genres">
+      <p v-for="genre in game[0].genres">{{ genre.name }}</h2>
       <h2>{{ Math.round(game[0].rating) }}/100</h2>
       <h4>{{ game[0].summary }}</h4>
-
-    <div class="videoCarousel">
-      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item" v-for="(video, index) in videos" :class="{ active: index===0}">
-            <youtube :video-id="video.video_id" player-width="640" player-height="375" class="d-block w-100"></youtube>
-          </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
     </div>
-
-    <!-- <div class="videos" v-for="video in videos">
-      <youtube :video-id="video.video_id" player-width="320" player-height="185"></youtube> 
-    </div> -->
-
-    <div class="screenshotCarousel">
-      <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item" v-for="(screenshot, index) in screenshots" :class="{ active: index===0}" data-bs-interval="4500">
-            <img :src="screenshot.url.replace('t_thumb', 't_1080p')" class="d-block w-100" alt="">
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
+    <!-- END GENRES -->
+    <!-- VIDEOS -->
+    <div class="videos" v-for="video in videos">
+      <youtube :video-id="video.video_id" player-width="640" player-height="370"></youtube> 
     </div>
-
-    <!-- <div v-for="screenshot in screenshots">
-        <img class="screenshot" v-if="screenshot.url" :src="screenshot.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
-    </div> -->
+    <!-- END VIDEO -->
+    <!-- SCREENSHOT -->
+    <div class="screenshot" v-for="screenshot in screenshots">
+        <img v-if="screenshot.url" :src="screenshot.url.replace('t_thumb', 't_1080p')" :alt="game[0].name">
+        <img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
+    </div>
+    <!-- END SCREENSHOT -->
+    <!-- SIMILAR GAMES -->
     <div v-for="similar in similarGames">
-      
       <a v-bind:href="`/games/${similar.id}`"><img :src="similar.image_url"></a>
     </div>
+    <!-- END SIMILAR GAMES -->
+    <hr>
+    <!-- PRICES -->
+    <div class="prices" v-for="price in prices">
+      <div v-for="store in stores">
+        <div v-if="price.storeID === store.storeID">
+          <a :href="store.link + game[0].name.split(' ').join('%20')"><img :src="`https://www.cheapshark.com/`+ store.images.logo"></a>
+          {{ store.storeName }}
+        </div>
+      </div>
+      <div v-if="price.isOnSale === '1'">
+        <h2>ON SALE: {{ Math.round(price.savings) }}% OFF!</h2>
+        <h3><strike>${{ price.normalPrice }}</strike></h3> 
+        <h2>${{ price.salePrice }}</h2>
+      </div>
+      <div v-else><h3>{{ price.normalPrice }}</h3></div>
       <hr>
-      <div v-for="price in prices">
-        <div v-for="store in stores">
-          <div v-if="price.storeID === store.storeID">
-            <p><img :src="`https://www.cheapshark.com/`+ store.images.logo"></p>
-            {{ store.storeName }}
-          </div>
-        </div>
-        <div v-if="price.isOnSale === '1'">
-          <h2>ON SALE: {{ Math.round(price.savings) }}% OFF!</h2>
-          <h3><strike>${{ price.normalPrice }}</strike></h3> 
-          <h2>${{ price.salePrice }}</h2>
-        </div>
-        <div v-else><h3>{{ price.normalPrice }}</h3></div>
-        <hr>
-     </div>
+    </div>
+    <!-- END PRICES -->
     </div>
   </div>
 </template>
@@ -120,7 +106,7 @@ export default {
   methods: {
     gameShow: function () {
       axios.post(`/games/${this.$route.params.id}`).then((response) => {
-        // console.log(response.data);
+        console.log(response.data);
         this.game = response.data;
         this.title = response.data[0].name.split(" ").join("").toLowerCase();
         this.screenshots = response.data[0].screenshots;
@@ -163,6 +149,7 @@ export default {
         .then((response) => {
           // console.log(response.data);
           this.stores = response.data;
+          this.addStoreLinks();
         });
     },
     getBoxarts: function () {
@@ -172,6 +159,52 @@ export default {
         });
       });
       // console.log(this.similarGames);
+    },
+    addStoreLinks: function () {
+      console.log("STORE LINKS");
+      this.stores.forEach((store) => {
+        if (store.storeID === "1") {
+          store["link"] = "https://store.steampowered.com/search/?term=";
+        } else if (store.storeID === "2") {
+          store["link"] = "https://www.gamersgate.com/games/?query=";
+        } else if (store.storeID === "3") {
+          store["link"] = "https://www.greenmangaming.com/search?query=";
+        } else if (store.storeID === "6") {
+          store["link"] = "https://www.direct2drive.com/#!/search?q=";
+        } else if (store.storeID === "7") {
+          store["link"] = "https://www.gog.com/games?search=";
+        } else if (store.storeID === "8") {
+          store["link"] =
+            "https://www.origin.com/usa/en-us/search?searchString=";
+        } else if (store.storeID === "11") {
+          store["link"] = "https://www.humblebundle.com/store/search?search=";
+        } else if (store.storeID === "13") {
+          store["link"] = "https://store.ubi.com/us/home/?lang=en_US";
+        } else if (store.storeID === "15") {
+          store["link"] = "https://www.fanatical.com/en/search?search=";
+        } else if (store.storeID === "21") {
+          store["link"] = "https://www.wingamestore.com/search/?SearchWord=";
+        } else if (store.storeID === "23") {
+          store["link"] = "https://www.gamebillet.com/search?q=";
+        } else if (store.storeID === "24") {
+          store["link"] = "https://www.voidu.com/en/search?q=";
+        } else if (store.storeID === "25") {
+          store["link"] = "https://www.epicgames.com/store/en-US/browse?q=";
+        } else if (store.storeID === "27") {
+          store["link"] = "https://us.gamesplanet.com/search?query=";
+        } else if (store.storeID === "28") {
+          store["link"] = "https://www.gamesload.com/results.html?search=";
+        } else if (store.storeID === "29") {
+          store["link"] = "https://2game.com/en-us/catalogsearch/result/?q=";
+        } else if (store.storeID === "30") {
+          store["link"] = "https://www.indiegala.com/search/";
+        } else if (store.storeID === "31") {
+          store["link"] = "https://us.shop.battle.net/en-us/family/";
+        } else if (store.storeID === "32") {
+          store["link"] = "https://www.allyouplay.com/en/search?q=";
+        }
+      });
+      console.log(this.stores);
     },
   },
 };

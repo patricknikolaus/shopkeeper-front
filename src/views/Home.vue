@@ -11,19 +11,8 @@
             :src="game.cover.url.replace('t_thumb', 't_1080p')"
             :alt="game.name">
           <img v-else src="/no_image_found.jpeg" /></router-link></p>
-          <div v-for="genre in game.genres">
-          <p>{{ genre.name }}</p>
-          <!-- <p><button v-on:click="gameShow">More Info</button></p> -->
-          </div>
           <hr>
       </div>
-      <!-- <div v-for="deal in deals">
-      ON SALE
-        <p v-on:click="searchGame"><img v-bind:src="deal.thumb"></p>
-          <p>{{ deal.title }}</p>
-          <p>${{ deal.salePrice }}</p>
-          <hr>
-    </div> -->
     </div>
   </div>
 </template>
@@ -39,12 +28,12 @@ export default {
       message: "Welcome to Shopkeeper.gg",
       games: [],
       search: "",
-      deals: [],
       username: [],
     };
   },
   created: function () {
     this.getUsername();
+    this.onLoad();
   },
   methods: {
     searchGame: function () {
@@ -55,6 +44,12 @@ export default {
     },
     getUsername: function () {
       this.username = localStorage.username;
+    },
+    onLoad: function () {
+      axios.post("/games", { search: this.search }).then((response) => {
+        this.games = response.data;
+        console.log(response.data);
+      });
     },
   },
 };
