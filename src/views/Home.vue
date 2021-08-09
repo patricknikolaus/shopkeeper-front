@@ -2,7 +2,7 @@
   <div class="home">
     <h1>Welcome to Shopkeeper.gg {{ username }}!</h1>
     <div>
-      <input type="text" v-model="search"><button v-on:click="searchGame">search</button>
+      <input type="text" v-model="search" v-on:keyup.enter="searchGame"><button v-on:click="searchGame">search</button>
       </div>
     <div v-for="game in games">
         <h1>{{ game.name }}</h1>
@@ -29,9 +29,6 @@
 </template>
 
 <style>
-img {
-  width: 200px;
-}
 </style>
 
 <script>

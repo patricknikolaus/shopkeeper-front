@@ -69,8 +69,9 @@
     <!-- <div v-for="screenshot in screenshots">
         <img class="screenshot" v-if="screenshot.url" :src="screenshot.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
     </div> -->
-    <div v-for="similar in game[0].similar_games">
-      <a v-bind:href="`/games/${similar.id}`">{{ similar.name }}</a>
+    <div v-for="similar in similarGames">
+      
+      <a v-bind:href="`/games/${similar.id}`"><img :src="similar.image_url"></a>
     </div>
       <hr>
       <div v-for="price in prices">
@@ -93,20 +94,6 @@
 </template>
 
 <style>
-.screenshotCarousel {
-  width: 640px;
-  height: 375px;
-  align-content: center;
-}
-.videoCarousel {
-  width: 640px;
-  height: 375px;
-  align-content: center;
-}
-.twitchIcon {
-  width: 50px;
-  height: 50px;
-}
 </style>
 
 <script>
@@ -122,26 +109,27 @@ export default {
       screenshots: [],
       errors: [],
       videos: [],
+      boxart: [],
+      similarGames: [],
     };
   },
-
+  mounted: function () {},
   created: function () {
     this.gameShow();
-    this.twitchStream();
   },
   methods: {
     gameShow: function () {
       axios.post(`/games/${this.$route.params.id}`).then((response) => {
-        console.log(response.data);
-        // console.log(response.data[0].screenshots);
-
+        // console.log(response.data);
         this.game = response.data;
         this.title = response.data[0].name.split(" ").join("").toLowerCase();
         this.screenshots = response.data[0].screenshots;
         this.videos = response.data[0].videos;
-        // console.log(localStorage.user_id);
+        this.similarGames = response.data[0].similar_games;
+        // console.log(this.similarGames);
         this.gamePrice();
         this.storeName();
+        this.getBoxarts();
       });
     },
     gamePrice: function () {
@@ -173,9 +161,17 @@ export default {
       axios
         .get("https://www.cheapshark.com/api/1.0/stores")
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           this.stores = response.data;
         });
+    },
+    getBoxarts: function () {
+      this.similarGames.forEach((game) => {
+        axios.get("/covers/" + `${game.id}`).then((response) => {
+          game["image_url"] = response.data.image;
+        });
+      });
+      // console.log(this.similarGames);
     },
   },
 };
