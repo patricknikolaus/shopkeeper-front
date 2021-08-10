@@ -110,6 +110,7 @@ export default {
         // console.log(response.data);
         this.game = response.data;
         this.title = response.data[0].name.split(" ").join("").toLowerCase();
+        console.log(this.title);
         this.screenshots = response.data[0].screenshots;
         this.videos = response.data[0].videos;
         this.similarGames = response.data[0].similar_games;
