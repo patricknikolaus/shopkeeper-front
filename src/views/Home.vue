@@ -2,16 +2,14 @@
 <section class="py-3">
 <div class="container">
     <div class="searchbar">
-        <form>
-            <div class="input-group">
-                <!-- Search input -->
-                <input class="form-control form-control-lg shadow-none px-" type="text" v-model="search" v-on:keyup.enter="searchGame" :placeholder="`Welcome to Shopkeeper ${this.username}!`">
-                <!-- Search button -->
-                <button class="btn btn-dark btn-sm shadow-none px-3" v-on:click="searchGame">
-                    <i class="bi bi-search"></i>
-                </button>
-            </div>
-        </form>
+        <div class="input-group">
+            <!-- Search input -->
+            <input class="form-control form-control-lg shadow-none px-" type="text" v-model="search" v-on:keyup.enter="searchGame" placeholder="Khajiit has wares, if you have coin...">
+            <!-- Search button -->
+            <button class="btn btn-dark btn-sm shadow-none px-3" v-on:click="searchGame">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
     </div>
   </div>
     <div class="container-fluid">
@@ -67,11 +65,13 @@ export default {
       games: [],
       search: "",
       username: [],
+      wishlist: [],
     };
   },
   created: function () {
     this.getUsername();
     this.onLoad();
+    this.getWishlist();
   },
   methods: {
     searchGame: function () {
@@ -87,6 +87,20 @@ export default {
       axios.post("/games", { search: this.search }).then((response) => {
         this.games = response.data;
         console.log(response.data);
+      });
+    },
+    getWishlist: function () {
+      axios.get("/wishlists").then((response) => {
+        console.log(response.data);
+        this.wishlist = response.data;
+        this.username = localStorage.username;
+      });
+    },
+    removeGame: function (game) {
+      axios.delete(`/wishlists/${game.id}`).then((response) => {
+        console.log(response.data);
+        let index = this.wishlist.indexOf(game);
+        this.wishlist.splice(index, 1);
       });
     },
   },
