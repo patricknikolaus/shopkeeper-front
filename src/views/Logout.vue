@@ -11,7 +11,8 @@ export default {
     localStorage.removeItem("jwt");
     localStorage.removeItem("user_id");
     localStorage.removeItem("username");
-    this.$router.push("/");
+    // this.$router.go("/");
+    window.location = "/";
   },
 };
 </script>
