@@ -1,19 +1,19 @@
 <template> 
   <div id="app">
     <header class="header-main bg-white header-dark header-option-1">
-      <div class="header-top pt-3 pb-2 py-md-2 py-lg-4">
+      <div class="header-top pt-3 pb-2 py-sm-4">
           <div class="container">
               <div class="row align-items-center">
-                  <div class="col-md-6 col-lg-3 text-center text-md-start">
+                  <div class="col-md-1 col-lg-3 text-center text-md-start">
                       <!-- Logo -->
                       <a class="navbar-brand" href="/">
-                          <img :src="`https://image.shutterstock.com/image-photo/concept-video-game-competition-esports-600w-1752952466.jpg`" title="" alt="">
+                          <!-- <img src="../public/static/img/banner2.jpg"title="" alt=""> -->
                       </a>
                       <!-- Logo -->
                       <hr class="d-md-none mt-3 mb-2">
                   </div>
                   <div class="col-lg-6 d-none d-lg-block">
-                      <!-- <img :src="`https://image.shutterstock.com/image-photo/concept-video-game-competition-esports-600w-1752952466.jpg`"> -->
+                      <a href="/"><img src="../public/static/img/banner2.jpg"></a>
                   </div>
                   <div class="col-md-6 col-lg-3">
                       <div class="nav flex-nowrap align-items-center justify-content-md-end header-right header-right-light w-100 w-md-auto position-relative">
@@ -43,16 +43,12 @@
                           <div class="nav-item me-md-0 me-lg-0">
                               <a class="nav-link" data-bs-toggle="modal" data-bs-target="#modalMiniCart" href="/wishlists" v-on:click="getWishlist">
                                   <span class="">
-                                      <h1 class="bi-border-width"></h1>
-                                  </span>
+                                      <h2 class="bi-grid-3x3-gap-fill"></h2>
+                                      
+                                  </span>  
                               </a>
                           </div>
                         </div>
-                          <!-- Mobile Toggle -->
-                          <button class="navbar-toggler navbar-toggler-px-light ms-auto ms-md-0 d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                              <span class="navbar-toggler-icon"></span>
-                          </button>
-                          <!-- End Mobile Toggle -->
                       </div>
                   </div>
               </div>
@@ -73,11 +69,8 @@
               </div>
           </div>
           <!-- Header-->
-          <div class="modal-header border-top">
-              <!-- <h6 class="m-0 fw-bold textcenter"> -->
-                <a v-if="isLoggedIn()" class="btn btn-block btn-dark w-100 mb-0" href="/wishlists">Wishlist</a>
-              
-              <!-- Close -->
+        <div class="modal-header border-top">
+          <h1 v-if="isLoggedIn()">Wishlist</h1>
           </div>
           <div class="modal-body">
               <!-- List group -->
@@ -134,104 +127,9 @@
     </header>  
 
     <router-view/>
-
-    <footer class="bg-dark footer footer-border-top light">
-      <div class="footer-top py-6">
-          <div class="container">
-              <div class="row">
-                  <div class="col-sm-6 col-lg-3 my-3">
-                      <h6 class="text-uppercase mb-5 text-white">
-                          Support
-                      </h6>
-                      <ul class="list-unstyled white-link footer-link-1 m-0">
-                          <li class="pb-2">
-                              <a href="#">Help</a>
-                          </li>
-                          <li class="pb-2">
-                              <a href="#">Contact Us</a>
-                          </li>
-                          <li class="pb-2">
-                              <a href="#">Feedback</a>
-                          </li>
-                          <li class="pb-2">
-                              <a href="#">Unsubscribe</a>
-                          </li>
-                          <li class="pb-2">
-                              <a href="#">Reservations</a>
-                          </li>
-                      </ul>
-                  </div>
-                  <div class="col-sm-6 col-lg-3 my-3">
-                      <h6 class="text-uppercase mb-5 text-white">
-                          Policies
-                      </h6>
-                      <ul class="list-unstyled white-link footer-link-1 m-0">
-                          <li class="pb-2">
-                              <a href="#">Privacy Policy</a>
-                          </li>
-                          <li class="pb-2">
-                              <a href="#">Terms of use</a>
-                          </li>
-                          <li class="pb-2">
-                              <a href="#">Gift card conditions</a>
-                          </li>
-                          <li class="pb-2">
-                              <a href="#">Shipping</a>
-                          </li>
-                          <li class="pb-2">
-                              <a href="#">Return</a>
-                          </li>
-                      </ul>
-                  </div>
-                  <div class="col-sm-6 col-lg-3 my-3">
-                      <h6 class="text-uppercase mb-5 text-white">
-                          Categories
-                      </h6>
-                      <ul class="list-unstyled white-link footer-link-1 m-0">
-                          <li class="pb-2">
-                              <a href="#">Men</a>
-                          </li>
-                          <li class="pb-2">
-                              <a href="#">Women</a>
-                          </li>
-                          <li class="pb-2">
-                              <a href="#">Accessories</a>
-                          </li>
-                          <li class="pb-2">
-                              <a href="#">Shoes</a>
-                          </li>
-                          <li class="pb-2">
-                              <a href="#">Denim</a>
-                          </li>
-                      </ul>
-                  </div>
-                  <div class="col-sm-6 col-lg-3 my-3">
-                      <h6 class="text-uppercase mb-5 text-white">
-                          Stay up to date
-                      </h6>
-                      <p class="text-white-85">Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan.</p>
-                      <form>
-                          <div class="input-group">
-                              <input type="email" class="form-control" placeholder="Enter your email">
-                              <button class="btn btn-primary" type="submit"><i class="bi bi-envelope"></i></button>
-                          </div>
-                          <p class="m-0 text-white-85">New UI kits or big discounts. Never spam.</p>
-                      </form>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div class="footer-bottom py-2 footer-border-top light small">
-          <div class="container">
-              <div class="row">
-                  <div class="col-md-6 text-center text-md-start py-1">
-                      <p class="m-0 text-white-85">© 2021 copyright by <a href="#" class="text-reset">pxdraft</a></p>
-                  </div>
-                  <div class="col-md-6 text-center text-md-end py-1">
-                      <img src="" title="" alt="">
-                  </div>
-              </div>
-          </div>
+    <footer class="bg-black footer light">
+      <div class="footer-bottom py-5 light small">
+          
       </div>
     </footer>
   </div>

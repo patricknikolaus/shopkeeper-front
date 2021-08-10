@@ -5,6 +5,7 @@ import axios from "axios";
 import VueYouTubeEmbed from 'vue-youtube-embed';
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import 'mdb-vue-ui-kit/css/mdb.min.css';
 
 Vue.use(VueYouTubeEmbed)
 

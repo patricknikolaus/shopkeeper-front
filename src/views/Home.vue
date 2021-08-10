@@ -4,10 +4,10 @@
     <div class="searchbar">
         <div class="input-group">
             <!-- Search input -->
-            <input class="form-control form-control-lg shadow-none px-" type="text" v-model="search" v-on:keyup.enter="searchGame" placeholder="Khajiit has wares, if you have coin...">
+            <input class="form-control form-control-lg shadow-none px-2" type="text" v-model="search" v-on:keyup.enter="searchGame" placeholder="Khajiit has wares, if you have coin...">
             <!-- Search button -->
-            <button class="btn btn-dark btn-sm shadow-none px-3" v-on:click="searchGame">
-                <i class="bi bi-search"></i>
+            <button class="btn btn-dark btn-md shadow-none px-3" v-on:click="searchGame">
+                <i class="bi bi-joystick"></i>
             </button>
         </div>
     </div>

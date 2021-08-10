@@ -1,5 +1,4 @@
-<template>
-  <div class="home">
+<div class="home">
     <h1>{{ message }}</h1>
     <!-- COVER -->
     <div class="cover">
@@ -77,9 +76,135 @@
     <!-- END PRICES -->
     </div>
   </div>
+
+<template>
+<section class="product-details py-6">
+      <div class="container">
+          <div class="row align-items-start">
+              <!-- Product Gallery -->
+              <div class="col-lg-6 lightbox-gallery product-gallery sticky-lg-top">
+                  <div>
+                      <div>
+                          <img v-if="game[0].cover" :src="game[0].cover.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
+                      </div>
+                      <div>
+                          <a class="" href=""><i class=""></i></a>
+                          <img :src="`${game[0].screenshots[0]}`" class="img-fluid" title="" alt="">
+                      </div>
+                      <!-- <div class="screenshotCarousel">
+                        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                          <div class="carousel-inner">
+                            <div class="carousel-item" v-for="(screenshot, index) in screenshots" :class="{ active: index===0}" data-bs-interval="4500">
+                              <img :src="screenshot.url.replace('t_thumb', 't_1080p')" class="d-block w-100" alt="">
+                            </div>
+                          </div>
+                          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
+                        </div>
+                      </div> -->
+                  </div>
+              </div>
+              <!-- End Product Gallery -->
+              <!-- Product Details -->
+              <div class="col-lg-6 ps-lg-3 pt-3 pt-lg-1">
+                  <div class="product-detail">
+                      <div class="products-brand pb-2">
+                        <!-- <div class="genres">
+                          <ul>
+                          <li v-for="(genre, index) in game[0].genres"><h6 v-if="index === game[0].genres.length - 1">{{ genre.name }}</h6><h6 v-else>{{ genre.name }}/</h6></li>
+                          </ul>
+                        </div> -->
+                      </div>
+                      <div class="products-title mb-1">
+                          <h1 class="h1">{{ game[0].name }}</h1>
+                      </div>
+                        
+                          <li v-for="(genre, index) in game[0].genres"><p v-if="index === game[0].genres.length - 1">{{ ` `+ genre.name + ` `}}</p><p v-else>{{ ` `+ genre.name +` ` }}/</p></li>
+  
+                      <div>
+                          <h3>{{ Math.round(game[0].rating) }}/100</h3>
+                      </div>
+                      <div class="product-description">
+                          <p>{{ game[0].summary }}</p>
+                      </div>
+                          
+                          
+                      </div>                  
+                      <div class="product-detail-actions d-flex flex-wrap pt-3">
+                          <div class="cart-button mb-3 d-flex">
+                              <button class="btn btn-success me-3">
+                                 Add to wishlist
+                              </button>
+                              <a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
+                                <img class="twitchIcon" src="../../public/static/img/twitchbanner2.jpeg" width="35%">
+                              </a>
+                          </div>
+                          <div class="screenshotCarousel pb-4">
+                          <img src="../../public/static/img/screenshots.jpg" width="50%" class="pb-1">
+                            <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                              <div class="carousel-inner">
+                                <div class="carousel-item" v-for="(screenshot, index) in screenshots" :class="{ active: index===0}" data-bs-interval="4500">
+                                  <img :src="screenshot.url.replace('t_thumb', 't_1080p')" class="d-block w-100" alt="">
+                                </div>
+                              </div>
+                              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                              </button>
+                              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                              </button>
+                            </div>
+                          </div>
+                          <div class="videoCarousel">
+                            <img src="../../public/static/img/videos.jpg" width="50%" class="pb-1">
+                            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                              <div class="carousel-inner">
+                                <div class="carousel-item" v-for="(video, index) in videos" :class="{ active: index===0}">
+                                  <youtube :video-id="video.video_id" player-width="635" player-height="370" class="d-block w-100"></youtube>
+                                </div>
+                              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                              </button>
+                              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                              </button>
+                            </div>
+                          </div>
+                      </div>
+                      
+                      
+                      <!-- <div class="pt-4">
+                          <img class="img-fluid" src="" title="" alt="">
+                      </div> -->
+                      <!-- More Details -->
+                      
+                      <!-- End More Details -->
+                  </div>
+              </div>
+              <!-- End Product Details -->
+          </div>
+      </div>
+  </section>
 </template>
 
 <style>
+li {
+  display: inline-block;
+  /* You can also add some margins here to make it look prettier */
+  zoom: 1;
+  *display: inline;
+  /* this fix is needed for IE7- */
+}
 </style>
 
 <script>
