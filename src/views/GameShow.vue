@@ -78,124 +78,178 @@
   </div>
 
 <template>
-<section class="product-details py-6">
-      <div class="container">
-          <div class="row align-items-start">
-              <!-- Product Gallery -->
-              <div class="col-lg-6 lightbox-gallery product-gallery sticky-lg-top">
-                  <div>
-                      <div>
-                          <img v-if="game[0].cover" :src="game[0].cover.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
-                      </div>
-                      <div>
-                          <a class="" href=""><i class=""></i></a>
-                          <img :src="`${game[0].screenshots[0]}`" class="img-fluid" title="" alt="">
-                      </div>
-                      <!-- <div class="screenshotCarousel">
-                        <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-                          <div class="carousel-inner">
-                            <div class="carousel-item" v-for="(screenshot, index) in screenshots" :class="{ active: index===0}" data-bs-interval="4500">
-                              <img :src="screenshot.url.replace('t_thumb', 't_1080p')" class="d-block w-100" alt="">
-                            </div>
-                          </div>
-                          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                          </button>
-                          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                          </button>
+<main>
+  <section class="product-details py-6">
+        <div class="container">
+            <div class="row align-items-start">
+                <!-- Product Gallery -->
+                <div class="col-lg-6 lightbox-gallery product-gallery sticky-lg-top">
+                    <div>
+                        <div>
+                            <img v-if="game[0].cover" :src="game[0].cover.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
                         </div>
-                      </div> -->
-                  </div>
-              </div>
-              <!-- End Product Gallery -->
-              <!-- Product Details -->
-              <div class="col-lg-6 ps-lg-3 pt-3 pt-lg-1">
-                  <div class="product-detail">
-                      <div class="products-brand pb-2">
-                        <!-- <div class="genres">
-                          <ul>
-                          <li v-for="(genre, index) in game[0].genres"><h6 v-if="index === game[0].genres.length - 1">{{ genre.name }}</h6><h6 v-else>{{ genre.name }}/</h6></li>
-                          </ul>
-                        </div> -->
-                      </div>
-                      <div class="products-title mb-1">
-                          <h1 class="h1">{{ game[0].name }}</h1>
-                      </div>
-                        
-                          <li v-for="(genre, index) in game[0].genres"><p v-if="index === game[0].genres.length - 1">{{ ` `+ genre.name + ` `}}</p><p v-else>{{ ` `+ genre.name +` ` }}/</p></li>
-  
-                      <div>
-                          <h3>{{ Math.round(game[0].rating) }}/100</h3>
-                      </div>
-                      <div class="product-description">
-                          <p>{{ game[0].summary }}</p>
-                      </div>
-                          
-                          
-                      </div>                  
-                      <div class="product-detail-actions d-flex flex-wrap pt-3">
-                          <div class="cart-button mb-3 d-flex">
-                              <button class="btn btn-success me-3">
-                                 Add to wishlist
-                              </button>
-                              <a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
-                                <img class="twitchIcon" src="../../public/static/img/twitchbanner2.jpeg" width="35%">
-                              </a>
-                          </div>
-                          <div class="screenshotCarousel pb-4">
-                          <img src="../../public/static/img/screenshots.jpg" width="50%" class="pb-1">
-                            <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-                              <div class="carousel-inner">
-                                <div class="carousel-item" v-for="(screenshot, index) in screenshots" :class="{ active: index===0}" data-bs-interval="4500">
-                                  <img :src="screenshot.url.replace('t_thumb', 't_1080p')" class="d-block w-100" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6 ps-lg-3 pt-3 pt-lg-1">
+                    <div class="product-detail">
+                        <div class="products-title mb-1">
+                            <h1 class="h1">{{ game[0].name }}</h1>
+                        </div>
+                          <li v-for="(genre, index) in game[0].genres"><p v-if="index === game[0].genres.length - 1">{{ ` `+ genre.name + ` `}}</p><p v-else> {{ ` `+ genre.name +` ` }}/</p></li>
+                        <div>
+                          <h3 v-if="game[0].rating >= 80" class="text-success">{{ Math.round(game[0].rating) }}/100</h3>
+                          <h3 v-else-if="game[0].rating > 50" class="text-warning">{{ Math.round(game[0].rating) }}/100</h3>
+                          <h3 v-else class="text-danger">{{ Math.round(game[0].rating) }}/100</h3>
+                        </div>
+                        <div class="product-description">
+                            <p>{{ game[0].summary }}</p>
+                        </div>
+                        </div>         
+                        <div class="product-detail-actions d-flex flex-wrap pt-3">
+                            <div class="cart-button mb-3 d-flex">
+                                <h4 v-if="isLoggedIn()"><button class="btn btn-success me-3" v-on:click="wishlistGame">
+                                  Add to wishlist
+                                </button></h4>
+                                <dialog id="wishlist-add">
+                                  <form method="dialog">
+                                    <div v-if="this.errors.length === 1">
+                                      <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+                                    </div>
+                                    <div v-else>
+                                      <p>Game added to wishlist!</p>
+                                    </div>
+                                    <button class="btn btn-danger">X</button>
+                                  </form>
+                                </dialog>
+                                <a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
+                                  <img class="twitchIcon" src="../../public/static/img/twitchbanner2.jpeg" width="34%">
+                                  <!-- <h4><button class="btn me-3">View on Twitch</button></h4> -->
+                                </a>
+                            </div>
+                            <div class="screenshotCarousel pb-4" v-if="screenshots != null">
+                            <img src="../../public/static/img/screenshots.jpg" width="50%" class="pb-1">
+                              <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                  <div class="carousel-item" v-for="(screenshot, index) in screenshots" :class="{ active: index===0}" data-bs-interval="4500">
+                                    <img :src="screenshot.url.replace('t_thumb', 't_1080p')" class="d-block w-100" alt="">
+                                    
+                                  </div>
                                 </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                  <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                  <span class="visually-hidden">Next</span>
+                                </button>
                               </div>
-                              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                              </button>
-                              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                              </button>
                             </div>
-                          </div>
-                          <div class="videoCarousel">
-                            <img src="../../public/static/img/videos.jpg" width="50%" class="pb-1">
-                            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                              <div class="carousel-inner">
-                                <div class="carousel-item" v-for="(video, index) in videos" :class="{ active: index===0}">
-                                  <youtube :video-id="video.video_id" player-width="635" player-height="370" class="d-block w-100"></youtube>
-                                </div>
-                              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
-                              </button>
-                              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
-                              </button>
+                            <div class="videoCarousel" v-if="videos != null">
+                              <img src="../../public/static/img/videos.jpg" width="50%" class="pb-1">
+                              <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                  <div class="carousel-item" v-for="(video, index) in videos" :class="{ active: index===0}">
+                                    <youtube :video-id="video.video_id" player-width="635" player-height="370" class="d-block w-100"></youtube>
+                                  </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                  <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                  <span class="visually-hidden">Next</span>
+                                </button>
+                              </div>
                             </div>
-                          </div>
-                      </div>
-                      
-                      
-                      <!-- <div class="pt-4">
-                          <img class="img-fluid" src="" title="" alt="">
-                      </div> -->
-                      <!-- More Details -->
-                      
-                      <!-- End More Details -->
-                  </div>
-              </div>
-              <!-- End Product Details -->
-          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </section>
+
+    <!-- <div class="prices" v-for="price in prices">
+      <div v-for="store in stores">
+        <div v-if="price.storeID === store.storeID">
+          <a :href="store.link + game[0].name" target="_blank"><img :src="`https://www.cheapshark.com/`+ store.images.logo"></a>
+          {{ store.storeName }}
+        </div>
       </div>
-  </section>
+      <div v-if="price.isOnSale === '1'">
+        <h2>ON SALE: {{ Math.round(price.savings) }}% OFF!</h2>
+        <h3><strike>${{ price.normalPrice }}</strike></h3> 
+        <h2>${{ price.salePrice }}</h2>
+      </div>
+      <div v-else><h3>{{ price.normalPrice }}</h3></div>
+      <hr>
+    </div> -->
+
+    <section class="section bg-gray-400">
+                <div class="container">
+                    <div class="row justify-content-center mb-5 mb-lg-7">
+                        <div class="col-lg-6 text-center">
+                            <img src="../../public/static/img/deals.png" width="45%">
+                        </div>
+                    </div>
+                        <div class="row g-4 justify-content-center mb-4 mb-lg-6">
+                          <div class="col-sm-1" v-for="price in prices">
+                            <div class="product-card-6">
+                              <div v-for="store in stores">
+                                <div v-if="price.storeID === store.storeID">
+                                  <div class="product-card-image">
+                                      <a :href="store.link + game[0].name" target="_blank">
+                                          <img :src="`https://www.cheapshark.com/`+ store.images.logo">
+                                      </a>
+                                  </div>
+                                    <div class="product-card-info">
+                                        <div class="product-price2">
+                                            <h4 class="text-dark">${{ price.normalPrice }}</h4>
+                                            <h4 class="text-dark">${{ price.salePrice }}</h4>
+                                        </div>
+                                      </div>
+                                  </div>
+                              </div>                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+    <section class="section bg-gray-500">
+            <div class="container">
+                <div class="row justify-content-center mb-7 mb-lg-7">
+                    <div class="col-lg-6 text-center">
+                        <img src="../../public/static/img/ymlt.png">
+                    </div>
+                </div>
+                <!-- <div v-for="similar in similarGames">
+                  <a v-bind:href="`/games/${similar.id}`"><img :src="similar.image_url"></a>
+                </div> -->
+                <div class="row g-1">
+                    <div class="col-sm-2" v-for="similar in similarGames">
+                        <div class="product-card-1">
+                            <div class="product-card-image">
+                                <div class="product-media">
+                                    <a :href="`/games/${similar.id}`">
+                                        <img :src="similar.image_url">
+                                    </a>
+                                    <div class="product-cart-btn">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+  </main>
+  
+
+  
 </template>
+
 
 <style>
 li {
@@ -204,6 +258,9 @@ li {
   zoom: 1;
   *display: inline;
   /* this fix is needed for IE7- */
+}
+.product-price2 {
+  margin: 0, auto;
 }
 </style>
 
@@ -225,20 +282,20 @@ export default {
       onSale: 0,
     };
   },
-  mounted: function () {},
-  created: function () {
+  mounted: function () {
     this.gameShow();
   },
+  created: function () {},
   methods: {
     gameShow: function () {
       axios.post(`/games/${this.$route.params.id}`).then((response) => {
-        // console.log(response.data);
+        console.log(response.data);
         this.game = response.data;
+        this.similarGames = response.data[0].similar_games;
         this.title = response.data[0].name.split(" ").join("").toLowerCase();
-        console.log(this.title);
+        console.log(this.similarGames);
         this.screenshots = response.data[0].screenshots;
         this.videos = response.data[0].videos;
-        this.similarGames = response.data[0].similar_games;
         // console.log(this.similarGames);
         this.gamePrice();
         this.storeName();
@@ -284,7 +341,8 @@ export default {
     getBoxarts: function () {
       this.similarGames.forEach((game) => {
         axios.get("/covers/" + `${game.id}`).then((response) => {
-          game["image_url"] = response.data.image;
+          // game["image_url"] = response.data.image;
+          this.$set(game, "image_url", response.data.image);
         });
       });
       // console.log(this.similarGames);
@@ -341,6 +399,13 @@ export default {
           this.onSale = 1;
         }
       });
+    },
+    isLoggedIn: function () {
+      if (localStorage.getItem("jwt")) {
+        return true;
+      } else {
+        return false;
+      }
     },
   },
 };

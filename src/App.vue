@@ -42,10 +42,10 @@
                         <div class="menuToggle">
                           <div class="nav-item me-md-0 me-lg-0">
                               <a class="nav-link" data-bs-toggle="modal" data-bs-target="#modalMiniCart" href="/wishlists" v-on:click="getWishlist">
-                                  <span class="">
+                                  
                                       <h2 class="bi-grid-3x3-gap-fill"></h2>
                                       
-                                  </span>  
+                                   
                               </a>
                           </div>
                         </div>
@@ -168,14 +168,14 @@ export default {
     },
     getWishlist: function () {
       axios.get("/wishlists").then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         this.wishlist = response.data;
         this.username = localStorage.username;
       });
     },
     removeGame: function (game) {
       axios.delete(`/wishlists/${game.id}`).then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         let index = this.wishlist.indexOf(game);
         this.wishlist.splice(index, 1);
       });
