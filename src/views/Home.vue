@@ -1,32 +1,30 @@
 <template>
-<section class="py-3">
-<div class="container">
-    <div class="searchbar">
-        <div class="input-group">
-            <!-- Search input -->
-            <input class="form-control form-control-lg shadow-none px-2" type="text" v-model="search" v-on:keyup.enter="searchGame" placeholder="Khajiit has wares, if you have coin...">
-            <!-- Search button -->
-            <button class="btn2 btn-dark btn-md shadow-none px-3" v-on:click="searchGame">
-                <i class="bi bi-joystick"></i>
-            </button>
+  <section class="py-3">
+    <div class="container">
+        <div class="searchbar">
+            <div class="input-group">
+                <input class="form-control form-control-lg shadow-none px-2" type="text" v-model="search" v-on:keyup.enter="searchGame" placeholder="Khajiit has wares, if you have coin...">
+                <button class="btn2 btn-dark btn-md shadow-none px-3" v-on:click="searchGame">
+                    <i class="bi bi-joystick"></i>
+                </button>
+            </div>
         </div>
-    </div>
-  </div>
-    <div class="container-fluid">
-        <div class="row g-3">
-            <div class="col-lg-2" v-for="game in games" >
-                <div class="position-relative hover-scale">
-                    <router-link class="stretched-link" v-bind:to="`/games/${game.id}`"></router-link>
-                    <div class="hover-scale-in">
-                        <img class="wd-50" v-if="game.cover"
-                        :src="game.cover.url.replace('t_thumb', 't_1080p')" width="400" height="450" title="" :alt="game.name">
-                        <img v-else :src="`https://westsiderc.org/wp-content/uploads/2019/08/Image-Not-Available.png`">
+      </div>
+        <div class="container-fluid">
+            <div class="row g-3">
+                <div class="col-lg-2" v-for="game in games" >
+                    <div class="position-relative hover-scale">
+                        <router-link class="stretched-link" v-bind:to="`/games/${game.id}`"></router-link>
+                        <div class="hover-scale-in">
+                            <img class="wd-50" v-if="game.cover"
+                            :src="game.cover.url.replace('t_thumb', 't_1080p')" width="400" height="450" title="" :alt="game.name">
+                            <img v-else :src="`https://westsiderc.org/wp-content/uploads/2019/08/Image-Not-Available.png`">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-  </section>
+    </section>
 </template>
   <!-- <div class="home">
   <h1>Welcome to Shopkeeper.gg {{ username }}!</h1>

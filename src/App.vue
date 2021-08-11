@@ -38,9 +38,12 @@
                           <!-- Acount -->
                           <!-- Wishlist -->
                           
-                          <!-- Cart -->
+                        <div class="nav-item">
+                              <a class="nav-link" href="/"><h2 class="bi-arrow-clockwise"></h2></a>
+                          </div> <!-- Cart -->
                         <div class="menuToggle">
                           <div class="nav-item me-md-0 me-lg-0">
+                              
                               <a class="nav-link" data-bs-toggle="modal" data-bs-target="#modalMiniCart" href="/wishlists" v-on:click="getWishlist">
                                   
                                       <h2 class="bi-grid-3x3-gap-fill"></h2>
@@ -60,17 +63,17 @@
       <div class="modal-content">
         <div class="mt-auto p-2 pt-0">
               <div class="pt-4">
-                  <a type="button" class="btn btn-close w-100 mb-3" data-bs-dismiss="modal"></a>
+                  <a type="button" class="btn btn-close w-100 mb-1" data-bs-dismiss="modal"></a>
                   <a class="btn btn-block btn-dark w-100 mb-3" href="/">Home</a>
                   <a v-if="!isLoggedIn()" class="btn btn-block btn-dark w-100 mb-3" href="/login">Login</a>
-                  <a v-if="isLoggedIn()" class="btn btn-block btn-dark w-100 mb-3" href="/logout">Logout</a>
-                  <a v-if="!isLoggedIn()" class="btn btn-block btn-dark w-100 mb-3" href="/users">Signup</a>
+                  <a v-if="isLoggedIn()" class="btn btn-block btn-dark w-100 mb-1" href="/logout">Logout</a>
+                  <a v-if="!isLoggedIn()" class="btn btn-block btn-dark w-100 mb-1" href="/users">Sign Up</a>
                   <!-- <a v-if="isLoggedIn()" class="btn btn-block btn-dark w-100 mb-3" href="/wishlists">Wishlist</a> -->
               </div>
           </div>
           <!-- Header-->
-        <div class="modal-header border-top">
-          <h1 v-if="isLoggedIn()">Wishlist</h1>
+        <div class="modal-header bg-black">
+          <div v-if="isLoggedIn()"><img src="../public/static/img/wishlistDarker.png" width="1050" height=60></div>
           </div>
           <div class="modal-body">
               <!-- List group -->
@@ -95,6 +98,7 @@
                               <div class="d-flex align-items-center">
                                   <!-- Select -->
                                   <!-- Remove -->
+                                  
                               </div>
                           <!-- </div> -->
                       </div>
@@ -102,36 +106,32 @@
               </ul>
           </div>
           <!-- Footer -->
-          
           <!-- Buttons -->
       </div>
   </div>
 </div>
+<nav class="navbar navbar-expand-md navbar-dark bg-black py-3">
+-          <div class="container">
+-              <!-- Menu -->
+-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+-                  <ul class="navbar-nav mx-auto">
+-                      <li class="nav-item">
+-                          <a href="#" class="nav-link"></a>
+-                          <label></label>
+-                          <div class="dropdown-menu left shadow-lg">
+-                          </div>
+-                      </li>
+-                  </ul>
+-              </div>
+-              <!-- End Menu -->
+-          </div>
+-      </nav>
       <!-- End Top Header -->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-black py-3">
-          <div class="container">
-              <!-- Menu -->
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav mx-auto">
-                      <li class="nav-item">
-                          <a href="#" class="nav-link"></a>
-                          <label></label>
-                          <div class="dropdown-menu left shadow-lg">
-                          </div>
-                      </li>
-                  </ul>
-              </div>
-              <!-- End Menu -->
-          </div>
-      </nav>
+      
     </header>  
 
     <router-view/>
-    <footer class="bg-black footer light">
-      <div class="footer-bottom py-5 light small">
-          
-      </div>
-    </footer>
+
   </div>
 </template>
 

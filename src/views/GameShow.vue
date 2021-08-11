@@ -83,10 +83,10 @@
         <div class="container">
             <div class="row align-items-start">
                 <!-- Product Gallery -->
-                <div class="col-lg-6 lightbox-gallery product-gallery sticky-lg-top">
+                <div class="col-lg-6 lightbox-gallery product-gallery sticky-sm-top">
                     <div>
                         <div>
-                            <img v-if="game[0].cover" :src="game[0].cover.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
+                            <img v-if="game[0].cover" :src="game[0].cover.url.replace('t_thumb', 't_1080p')" width="2000" :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
                         </div>
                     </div>
                 </div>
@@ -121,25 +121,26 @@
                                     <button class="btn btn-danger">X</button>
                                   </form>
                                 </dialog>
-                                <a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
+                                <div><a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
                                   <img class="twitchIcon" src="../../public/static/img/twitchbanner2.jpeg" width="34%">
                                   <!-- <h4><button class="btn me-3">View on Twitch</button></h4> -->
-                                </a>
+                                </a></div>
+                                <div></div>
                             </div>
                             <div class="screenshotCarousel pb-4" v-if="screenshots != null">
                             <img src="../../public/static/img/screenshots.jpg" width="50%" class="pb-1">
-                              <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                              <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
-                                  <div class="carousel-item" v-for="(screenshot, index) in screenshots" :class="{ active: index===0}" data-bs-interval="4500">
+                                  <div class="carousel-item" v-for="(screenshot, index) in screenshots" :class="{ active: index===0}">
                                     <img :src="screenshot.url.replace('t_thumb', 't_1080p')" class="d-block w-100" alt="">
                                     
                                   </div>
                                 </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                   <span class="visually-hidden">Previous</span>
                                 </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
                                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                   <span class="visually-hidden">Next</span>
                                 </button>
@@ -184,39 +185,39 @@
       <div v-else><h3>{{ price.normalPrice }}</h3></div>
       <hr>
     </div> -->
-
-    <section class="section bg-gray-400">
-                <div class="container">
-                    <div class="row justify-content-center mb-5 mb-lg-7">
-                        <div class="col-lg-6 text-center">
-                            <img src="../../public/static/img/deals.png" width="45%">
-                        </div>
-                    </div>
-                        <div class="row g-4 justify-content-center mb-4 mb-lg-6">
-                          <div class="col-sm-1" v-for="price in prices">
-                            <div class="product-card-6">
-                              <div v-for="store in stores">
-                                <div v-if="price.storeID === store.storeID">
-                                  <div class="product-card-image">
-                                      <a :href="store.link + game[0].name" target="_blank">
-                                          <img :src="`https://www.cheapshark.com/`+ store.images.logo">
-                                      </a>
-                                  </div>
-                                    <div class="product-card-info">
-                                        <div class="product-price2">
-                                            <h4 class="text-dark">${{ price.normalPrice }}</h4>
-                                            <h4 class="text-dark">${{ price.salePrice }}</h4>
-                                        </div>
-                                      </div>
-                                  </div>
-                              </div>                            
-                            </div>
-                        </div>
-                    </div>
+<section class="section bg-black">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-lg-2 my-2" v-for="price in prices">
+      <div class="product-card-2">
+        <div v-for="store in stores">
+          <div v-if="price.storeID === store.storeID">
+            <div class="product-card-image">
+              <div class="product-media">
+                  <a :href="store.link + game[0].name" target="_blank">
+                      <img class="img-fluid" :src="`https://www.cheapshark.com/`+ store.images.logo">
+                  </a> 
+              </div>
+          </div>
+          <div class="product-card-info">  
+              <div class="product-price" v-if="price.isOnSale === '1'">
+                <div class="badge-ribbon">
+                  <span class="badge bg-danger">{{ Math.round(price.savings) }}%</span>
                 </div>
-            </section>
+                  <span class="text-dark">${{ price.salePrice }}</span>
+                  <!-- <del class="fs-sm text-danger">${{ price.normalPrice }}</del> -->
+              </div>
+                  <div v-else><span class="text-dark">${{ price.normalPrice }}</span></div>
+                  </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+</section>
 
-    <section class="section bg-gray-500">
+    <section class="section bg-white">
             <div class="container">
                 <div class="row justify-content-center mb-7 mb-lg-7">
                     <div class="col-lg-6 text-center">
