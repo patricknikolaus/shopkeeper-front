@@ -38,8 +38,8 @@
                               :alt="game.title">
                             <img v-else :src="`https://westsiderc.org/wp-content/uploads/2019/08/Image-Not-Available.png`">
                         </div>
-                        <h2>{{ game.title }}</h2>
-      <button v-on:click="removeGame(game)">remove</button>
+                        <button type="button" class="btn btn-dark" v-on:click="removeGame(game)">Remove</button>
+      <!-- <button >remove</button> -->
                     </div>
                 </div>
             </div>

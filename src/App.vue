@@ -73,12 +73,13 @@
           </div>
           <!-- Header-->
         <div class="modal-header bg-black">
-          <div v-if="isLoggedIn()"><a href="/wishlists"><img src="../public/static/img/wishlistDarker.png" width="1050" height=65></a></div>
+          <div v-if="isLoggedIn()"><img src="../public/static/img/wishlistDarker.png" width="1050" height=65></div>
           </div>
           <div class="modal-body">
               <!-- List group -->
               <ul class="list-unstyled m-0 p-0">
                   <li class="py-0 border-bottom">
+                     
                           <div class="col-12" v-for="game in wishlist">
                             <h3>{{ game.title }}</h3>
                             <a :href="`/games/${game.game_id}`"><img
@@ -110,21 +111,21 @@
   </div>
 </div>
 <nav class="navbar navbar-expand-md navbar-dark bg-black py-3">
--          <div class="container">
--              <!-- Menu -->
--              <div class="collapse navbar-collapse" id="navbarSupportedContent">
--                  <ul class="navbar-nav mx-auto">
--                      <li class="nav-item">
--                          <a href="#" class="nav-link"></a>
--                          <label></label>
--                          <div class="dropdown-menu left shadow-lg">
--                          </div>
--                      </li>
--                  </ul>
--              </div>
--              <!-- End Menu -->
--          </div>
--      </nav>
+          <div class="container">
+              <!-- Menu -->
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mx-auto">
+                      <li class="nav-item">
+                          <a href="#" class="nav-link"></a>
+                          <label></label>
+                          <div class="dropdown-menu left shadow-lg">
+                          </div>
+                      </li>
+                  </ul>
+              </div>
+              <!-- End Menu -->
+          </div>
+     </nav>
       <!-- End Top Header -->
       
     </header>  
