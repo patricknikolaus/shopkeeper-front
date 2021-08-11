@@ -11,7 +11,7 @@
         </div>
       </div>
         <div class="container-fluid">
-            <div class="row g-3">
+            <div class="row g-3 justify-content-center">
                 <div class="col-lg-2" v-for="game in games" >
                     <div class="position-relative hover-scale">
                         <router-link class="stretched-link" v-bind:to="`/games/${game.id}`"></router-link>

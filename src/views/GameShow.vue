@@ -107,10 +107,13 @@
                         </div>         
                         <div class="product-detail-actions d-flex flex-wrap pt-3">
                             <div class="cart-button mb-3 d-flex">
-                                <h4 v-if="isLoggedIn()"><button class="btn btn-success me-3" v-on:click="wishlistGame">
+                                <h4 v-if="(isLoggedIn()) && (wishlisted.listed === 0)"><button class="btn btn-success me-3" v-on:click="wishlistGame">
                                   Add to wishlist
                                 </button></h4>
-                                <dialog id="wishlist-add">
+                                <h4 v-else-if="wishlisted.listed === 1"><button class="btn btn-danger me-3" v-on:click="removeGame(game[0])">
+                                  Remove from wishlist
+                                </button></h4>
+                                <!-- <dialog id="wishlist-add">
                                   <form method="dialog">
                                     <div v-if="this.errors.length === 1">
                                       <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
@@ -120,7 +123,7 @@
                                     </div>
                                     <button class="btn btn-danger">X</button>
                                   </form>
-                                </dialog>
+                                </dialog> -->
                                 <div><a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
                                   <img class="twitchIcon" src="../../public/static/img/twitchbanner2.jpeg" width="34%">
                                   <!-- <h4><button class="btn me-3">View on Twitch</button></h4> -->
@@ -185,10 +188,10 @@
       <div v-else><h3>{{ price.normalPrice }}</h3></div>
       <hr>
     </div> -->
-<section class="section bg-gray-800">
+<section class="section bg-gray-500">
   <div class="container">
-    <div class="row">
-      <div class="col-md-6 col-lg-2 my-1" v-for="price in prices">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-2 my-2" v-for="price in prices">
       <div class="product-card">
         <div v-for="(store, index) in stores">
           <div v-if="price.storeID === store.storeID">
@@ -196,7 +199,7 @@
               <div class="product-card-image">
                 <div class="product-media position-relative">
                     <div class="badge-ribbon position-absolute top-0 start-0">
-                      <h4> <span class="badge bg-danger">{{ Math.round(price.savings) }}%</span></h4>
+                      <h4> <span class="badge bg-danger"><small>{{ Math.round(price.savings) }}%<div>OFF</div></small></span></h4>
                     </div>
                     <a :href="store.link + game[0].name" target="_blank">
                         <img class="img-fluid" :src="`https://www.cheapshark.com/`+ store.images.logo">
@@ -205,7 +208,7 @@
               </div>
                 <div class="product-card-info">  
                   <div class="product-price position-relative">
-                    <h4><span class="badge bg-secondary position-absolute bottom-0 start-50 translate-middle-x">
+                    <h4><span class="badge bg-success position-absolute bottom-0 start-50 translate-middle-x">
                     <span class="text-white">${{ price.salePrice }}</span>
                       <div>
                         <del class="fs-sm text-dark">${{ price.normalPrice }}</del>
@@ -215,13 +218,9 @@
                   </div>
                 </div>
                 <!-- ELSE -->
-                <div v-else="">
-
+                <div v-else>
                   <div class="product-card-image">
                   <div class="product-media position-relative">
-                      <!-- <div class="badge-ribbon position-absolute top-0 start-0">
-                        <h4> <span class="badge bg-danger">{{ Math.round(price.savings) }}%</span></h4>
-                      </div> -->
                       <a :href="store.link + game[0].name" target="_blank">
                           <img class="img-fluid" :src="`https://www.cheapshark.com/`+ store.images.logo">
                       </a> 
@@ -229,9 +228,8 @@
                 </div>
                   <div class="product-card-info">  
                     <div class="product-price position-relative">
-                      <h4><span class="badge bg-secondary position-absolute bottom-0 start-50 translate-middle-x">
+                      <h4><span class="badge bg-success position-absolute bottom-0 start-50 translate-middle-x">
                       <span class="text-white">${{ price.normalPrice }}</span>
-                        
                       </span></h4>  
                       </div>               
                     </div>
@@ -310,12 +308,18 @@ export default {
       boxart: [],
       similarGames: [],
       onSale: 0,
+      wishlist: [],
+      wishlisted: { listed: 0 },
+      wishlistID: 0,
     };
   },
   mounted: function () {
+    // this.gameShow();
+    // this.getWishlist();
+  },
+  created: function () {
     this.gameShow();
   },
-  created: function () {},
   methods: {
     gameShow: function () {
       axios.post(`/games/${this.$route.params.id}`).then((response) => {
@@ -330,6 +334,8 @@ export default {
         this.gamePrice();
         this.storeName();
         this.getBoxarts();
+        // this.isWishlisted();
+        this.getWishlist();
       });
     },
     gamePrice: function () {
@@ -341,23 +347,24 @@ export default {
         .then((response) => {
           console.log(response.data);
           this.prices = response.data;
-          this.isOnSale();
+          // this.isOnSale();
         });
     },
     wishlistGame: function () {
-      axios
-        .post("/wishlists", {
-          user_id: localStorage.user_id,
-          game_id: this.game[0].id,
-          image_url: this.game[0].cover.url,
-          title: this.game[0].name,
-          on_sale: this.onSale,
-        })
-        .catch((error) => {
-          // console.log(error.response);
-          this.errors = ["Game is already on your wishlist!"];
-        });
-      document.querySelector("#wishlist-add").showModal();
+      axios.post("/wishlists", {
+        user_id: localStorage.user_id,
+        game_id: this.game[0].id,
+        image_url: this.game[0].cover.url,
+        title: this.game[0].name,
+        on_sale: this.onSale,
+      });
+      this.wishlisted["listed"] = 1;
+      // window.location = "http://localhost:8080/games/26226";
+      //   .catch((error) => {
+      //     // console.log(error.response);
+      //     this.errors = ["Game is already on your wishlist!"];
+      //   });
+      // document.querySelector("#wishlist-add").showModal();
     },
     storeName: function () {
       axios
@@ -423,23 +430,43 @@ export default {
       });
       // console.log(this.stores);
     },
-    isOnSale: function () {
-      console.log(this.prices);
-      this.prices.forEach((store) => {
-        if (store.isOnSale === "0") {
-          // this.onSale = 1;
-          let index = this.prices.indexOf(store);
-          this.prices.splice(index, 1);
-        }
-        console.log(this.prices);
-      });
-    },
     isLoggedIn: function () {
       if (localStorage.getItem("jwt")) {
         return true;
       } else {
         return false;
       }
+    },
+    getWishlist: function () {
+      axios.get("/wishlists").then((response) => {
+        console.log(response.data);
+        this.wishlist = response.data;
+        this.username = localStorage.username;
+        this.isWishlisted();
+      });
+    },
+    removeGame: function (game) {
+      axios.delete(`/wishlists/${this.wishlistID}`).then((response) => {
+        console.log(response.data);
+        let index = this.wishlist.indexOf(game);
+        this.wishlist.splice(index, 1);
+        this.$set(this.wishlisted, "listed", 0);
+      });
+    },
+    isWishlisted: function () {
+      this.wishlist.forEach((list) => {
+        if (list.game_id == this.game[0].id) {
+          this.wishlistID = list.id;
+          this.$set(this.wishlisted, "listed", 1);
+          // this.wishlisted["listed"] = 1;
+        } else {
+          this.wishlistID = list.id;
+          this.$set(this.wishlisted, "listed", 0);
+          // this.wishlisted["listed"] = 0;
+        }
+        // console.log(this.wishlistID);
+        console.log(this.wishlisted);
+      });
     },
   },
 };

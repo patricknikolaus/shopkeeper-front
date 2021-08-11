@@ -73,13 +73,12 @@
           </div>
           <!-- Header-->
         <div class="modal-header bg-black">
-          <div v-if="isLoggedIn()"><img src="../public/static/img/wishlistDarker.png" width="1050" height=60></div>
+          <div v-if="isLoggedIn()"><a href="/wishlists"><img src="../public/static/img/wishlistDarker.png" width="1050" height=65></a></div>
           </div>
           <div class="modal-body">
               <!-- List group -->
               <ul class="list-unstyled m-0 p-0">
                   <li class="py-0 border-bottom">
-                     
                           <div class="col-12" v-for="game in wishlist">
                             <h3>{{ game.title }}</h3>
                             <a :href="`/games/${game.game_id}`"><img
