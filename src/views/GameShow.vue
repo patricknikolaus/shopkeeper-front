@@ -185,37 +185,66 @@
       <div v-else><h3>{{ price.normalPrice }}</h3></div>
       <hr>
     </div> -->
-<section class="section bg-black">
+<section class="section bg-gray-800">
   <div class="container">
     <div class="row">
-      <div class="col-md-6 col-lg-2 my-2" v-for="price in prices">
-      <div class="product-card-2">
-        <div v-for="store in stores">
+      <div class="col-md-6 col-lg-2 my-1" v-for="price in prices">
+      <div class="product-card">
+        <div v-for="(store, index) in stores">
           <div v-if="price.storeID === store.storeID">
-            <div class="product-card-image">
-              <div class="product-media">
-                  <a :href="store.link + game[0].name" target="_blank">
-                      <img class="img-fluid" :src="`https://www.cheapshark.com/`+ store.images.logo">
-                  </a> 
-              </div>
-          </div>
-          <div class="product-card-info">  
-              <div class="product-price" v-if="price.isOnSale === '1'">
-                <div class="badge-ribbon">
-                  <span class="badge bg-danger">{{ Math.round(price.savings) }}%</span>
+            <div v-if="price.isOnSale === '1'">
+              <div class="product-card-image">
+                <div class="product-media position-relative">
+                    <div class="badge-ribbon position-absolute top-0 start-0">
+                      <h4> <span class="badge bg-danger">{{ Math.round(price.savings) }}%</span></h4>
+                    </div>
+                    <a :href="store.link + game[0].name" target="_blank">
+                        <img class="img-fluid" :src="`https://www.cheapshark.com/`+ store.images.logo">
+                    </a> 
                 </div>
-                  <span class="text-dark">${{ price.salePrice }}</span>
-                  <!-- <del class="fs-sm text-danger">${{ price.normalPrice }}</del> -->
               </div>
-                  <div v-else><span class="text-dark">${{ price.normalPrice }}</span></div>
+                <div class="product-card-info">  
+                  <div class="product-price position-relative">
+                    <h4><span class="badge bg-secondary position-absolute bottom-0 start-50 translate-middle-x">
+                    <span class="text-white">${{ price.salePrice }}</span>
+                      <div>
+                        <del class="fs-sm text-dark">${{ price.normalPrice }}</del>
+                      </div>
+                    </span></h4>  
+                    </div>               
                   </div>
+                </div>
+                <!-- ELSE -->
+                <div v-else="">
+
+                  <div class="product-card-image">
+                  <div class="product-media position-relative">
+                      <!-- <div class="badge-ribbon position-absolute top-0 start-0">
+                        <h4> <span class="badge bg-danger">{{ Math.round(price.savings) }}%</span></h4>
+                      </div> -->
+                      <a :href="store.link + game[0].name" target="_blank">
+                          <img class="img-fluid" :src="`https://www.cheapshark.com/`+ store.images.logo">
+                      </a> 
                   </div>
+                </div>
+                  <div class="product-card-info">  
+                    <div class="product-price position-relative">
+                      <h4><span class="badge bg-secondary position-absolute bottom-0 start-50 translate-middle-x">
+                      <span class="text-white">${{ price.normalPrice }}</span>
+                        
+                      </span></h4>  
+                      </div>               
+                    </div>
+                  </div>
+                </div>
+                <!-- end else -->
               </div>
+            </div>
           </div>
+        </div>
       </div>
-  </div>
-  </div>
-</section>
+    </div>
+  </section>
 
     <section class="section bg-white">
             <div class="container">
@@ -395,10 +424,14 @@ export default {
       // console.log(this.stores);
     },
     isOnSale: function () {
+      console.log(this.prices);
       this.prices.forEach((store) => {
-        if (store.isOnSale === "1") {
-          this.onSale = 1;
+        if (store.isOnSale === "0") {
+          // this.onSale = 1;
+          let index = this.prices.indexOf(store);
+          this.prices.splice(index, 1);
         }
+        console.log(this.prices);
       });
     },
     isLoggedIn: function () {
