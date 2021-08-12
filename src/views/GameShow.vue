@@ -207,7 +207,7 @@
                     <div class="badge-ribbon position-absolute top-0 start-0">
                       <h4> <span class="badge bg-danger"><small>{{ Math.round(price.savings) }}%<div>OFF</div></small></span></h4>
                     </div>
-                    <a :href="store.link + game[0].name" target="_blank">
+                    <a :href="`https://www.cheapshark.com/redirect?dealID=`+ price.dealID" target="_blank">
                         <img class="img-fluid" :src="`https://www.cheapshark.com/`+ store.images.logo">
                     </a> 
                 </div>
@@ -340,6 +340,7 @@ export default {
         })
         .then((response) => {
           this.prices = response.data;
+          console.log(response.data);
         });
     },
     storeName: function () {
@@ -347,7 +348,7 @@ export default {
         .get("https://www.cheapshark.com/api/1.0/stores")
         .then((response) => {
           this.stores = response.data;
-          this.addStoreLinks();
+          // this.addStoreLinks();
         });
     },
     getBoxarts: function () {
@@ -357,50 +358,50 @@ export default {
         });
       });
     },
-    addStoreLinks: function () {
-      this.stores.forEach((store) => {
-        if (store.storeID === "1") {
-          store["link"] = "https://store.steampowered.com/search/?term=";
-        } else if (store.storeID === "2") {
-          store["link"] = "https://www.gamersgate.com/games/?query=";
-        } else if (store.storeID === "3") {
-          store["link"] = "https://www.greenmangaming.com/search?query=";
-        } else if (store.storeID === "6") {
-          store["link"] = "https://www.direct2drive.com/#!/search?q=";
-        } else if (store.storeID === "7") {
-          store["link"] = "https://www.gog.com/games?search=";
-        } else if (store.storeID === "8") {
-          store["link"] =
-            "https://www.origin.com/usa/en-us/search?searchString=";
-        } else if (store.storeID === "11") {
-          store["link"] = "https://www.humblebundle.com/store/search?search=";
-        } else if (store.storeID === "13") {
-          store["link"] = "https://store.ubi.com/us/home/?lang=en_US";
-        } else if (store.storeID === "15") {
-          store["link"] = "https://www.fanatical.com/en/search?search=";
-        } else if (store.storeID === "21") {
-          store["link"] = "https://www.wingamestore.com/search/?SearchWord=";
-        } else if (store.storeID === "23") {
-          store["link"] = "https://www.gamebillet.com/search?q=";
-        } else if (store.storeID === "24") {
-          store["link"] = "https://www.voidu.com/en/search?q=";
-        } else if (store.storeID === "25") {
-          store["link"] = "https://www.epicgames.com/store/en-US/browse?q=";
-        } else if (store.storeID === "27") {
-          store["link"] = "https://us.gamesplanet.com/search?query=";
-        } else if (store.storeID === "28") {
-          store["link"] = "https://www.gamesload.com/results.html?search=";
-        } else if (store.storeID === "29") {
-          store["link"] = "https://2game.com/en-us/catalogsearch/result/?q=";
-        } else if (store.storeID === "30") {
-          store["link"] = "https://www.indiegala.com/search/";
-        } else if (store.storeID === "31") {
-          store["link"] = "https://us.shop.battle.net/en-us/family/";
-        } else if (store.storeID === "32") {
-          store["link"] = "https://www.allyouplay.com/en/search?q=";
-        }
-      });
-    },
+    // addStoreLinks: function () {
+    //   this.stores.forEach((store) => {
+    //     if (store.storeID === "1") {
+    //       store["link"] = "https://store.steampowered.com/search/?term=";
+    //     } else if (store.storeID === "2") {
+    //       store["link"] = "https://www.gamersgate.com/games/?query=";
+    //     } else if (store.storeID === "3") {
+    //       store["link"] = "https://www.greenmangaming.com/search?query=";
+    //     } else if (store.storeID === "6") {
+    //       store["link"] = "https://www.direct2drive.com/#!/search?q=";
+    //     } else if (store.storeID === "7") {
+    //       store["link"] = "https://www.gog.com/games?search=";
+    //     } else if (store.storeID === "8") {
+    //       store["link"] =
+    //         "https://www.origin.com/usa/en-us/search?searchString=";
+    //     } else if (store.storeID === "11") {
+    //       store["link"] = "https://www.humblebundle.com/store/search?search=";
+    //     } else if (store.storeID === "13") {
+    //       store["link"] = "https://store.ubi.com/us/home/?lang=en_US";
+    //     } else if (store.storeID === "15") {
+    //       store["link"] = "https://www.fanatical.com/en/search?search=";
+    //     } else if (store.storeID === "21") {
+    //       store["link"] = "https://www.wingamestore.com/search/?SearchWord=";
+    //     } else if (store.storeID === "23") {
+    //       store["link"] = "https://www.gamebillet.com/search?q=";
+    //     } else if (store.storeID === "24") {
+    //       store["link"] = "https://www.voidu.com/en/search?q=";
+    //     } else if (store.storeID === "25") {
+    //       store["link"] = "https://www.epicgames.com/store/en-US/browse?q=";
+    //     } else if (store.storeID === "27") {
+    //       store["link"] = "https://us.gamesplanet.com/search?query=";
+    //     } else if (store.storeID === "28") {
+    //       store["link"] = "https://www.gamesload.com/results.html?search=";
+    //     } else if (store.storeID === "29") {
+    //       store["link"] = "https://2game.com/en-us/catalogsearch/result/?q=";
+    //     } else if (store.storeID === "30") {
+    //       store["link"] = "https://www.indiegala.com/search/";
+    //     } else if (store.storeID === "31") {
+    //       store["link"] = "https://us.shop.battle.net/en-us/family/";
+    //     } else if (store.storeID === "32") {
+    //       store["link"] = "https://www.allyouplay.com/en/search?q=";
+    //     }
+    //   });
+    // },
     isLoggedIn: function () {
       if (localStorage.getItem("jwt")) {
         return true;
