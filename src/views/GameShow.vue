@@ -107,12 +107,14 @@
                         </div>         
                         <div class="product-detail-actions d-flex flex-wrap pt-3">
                             <div class="cart-button mb-3 d-flex">
-                                <h4 v-if="(isLoggedIn()) && (wishlisted.listed === 0)"><button class="btn btn-success me-3" v-on:click="wishlistGame">
+                              <div v-if="isLoggedIn()">
+                                <h4 v-if="wishlisted === false"><button class="btn btn-success me-3" v-on:click="wishlistGame">
                                   Add to wishlist
                                 </button></h4>
-                                <h4 v-else-if="wishlisted.listed === 1"><button class="btn btn-danger me-3" v-on:click="removeGame(game[0])">
+                                <h4 v-else-if="wishlisted === true"><button class="btn btn-danger me-3" v-on:click="removeGame(game[0])">
                                   Remove from wishlist
                                 </button></h4>
+                              </div>
                                 <!-- <dialog id="wishlist-add">
                                   <form method="dialog">
                                     <div v-if="this.errors.length === 1">
@@ -297,26 +299,21 @@ import axios from "axios";
 export default {
   data: function () {
     return {
-      message: "Game Show",
       game: [],
       prices: [],
       title: "",
       stores: [],
       screenshots: [],
-      errors: [],
       videos: [],
       boxart: [],
       similarGames: [],
       onSale: 0,
       wishlist: [],
-      wishlisted: { listed: 0 },
+      wishlisted: false,
       wishlistID: 0,
     };
   },
-  mounted: function () {
-    // this.gameShow();
-    // this.getWishlist();
-  },
+  mounted: function () {},
   created: function () {
     this.gameShow();
   },
@@ -327,50 +324,27 @@ export default {
         this.game = response.data;
         this.similarGames = response.data[0].similar_games;
         this.title = response.data[0].name.split(" ").join("").toLowerCase();
-        console.log(this.similarGames);
         this.screenshots = response.data[0].screenshots;
         this.videos = response.data[0].videos;
-        // console.log(this.similarGames);
         this.gamePrice();
         this.storeName();
         this.getBoxarts();
-        // this.isWishlisted();
         this.getWishlist();
       });
     },
     gamePrice: function () {
-      // console.log("price");
       axios
         .get("https://www.cheapshark.com/api/1.0/deals", {
           params: { title: this.title, exact: 1 },
         })
         .then((response) => {
-          console.log(response.data);
           this.prices = response.data;
-          // this.isOnSale();
         });
-    },
-    wishlistGame: function () {
-      axios.post("/wishlists", {
-        user_id: localStorage.user_id,
-        game_id: this.game[0].id,
-        image_url: this.game[0].cover.url,
-        title: this.game[0].name,
-        on_sale: this.onSale,
-      });
-      this.wishlisted["listed"] = 1;
-      // window.location = "http://localhost:8080/games/26226";
-      //   .catch((error) => {
-      //     // console.log(error.response);
-      //     this.errors = ["Game is already on your wishlist!"];
-      //   });
-      // document.querySelector("#wishlist-add").showModal();
     },
     storeName: function () {
       axios
         .get("https://www.cheapshark.com/api/1.0/stores")
         .then((response) => {
-          // console.log(response.data);
           this.stores = response.data;
           this.addStoreLinks();
         });
@@ -378,14 +352,11 @@ export default {
     getBoxarts: function () {
       this.similarGames.forEach((game) => {
         axios.get("/covers/" + `${game.id}`).then((response) => {
-          // game["image_url"] = response.data.image;
           this.$set(game, "image_url", response.data.image);
         });
       });
-      // console.log(this.similarGames);
     },
     addStoreLinks: function () {
-      // console.log("STORE LINKS");
       this.stores.forEach((store) => {
         if (store.storeID === "1") {
           store["link"] = "https://store.steampowered.com/search/?term=";
@@ -428,7 +399,6 @@ export default {
           store["link"] = "https://www.allyouplay.com/en/search?q=";
         }
       });
-      // console.log(this.stores);
     },
     isLoggedIn: function () {
       if (localStorage.getItem("jwt")) {
@@ -442,30 +412,34 @@ export default {
         console.log(response.data);
         this.wishlist = response.data;
         this.username = localStorage.username;
-        this.isWishlisted();
+        this.wishlist.forEach((list) => {
+          if (list.game_id == this.game[0].id) {
+            this.wishlistID = list.id;
+            this.wishlisted = true;
+          }
+        });
       });
     },
-    removeGame: function (game) {
+    wishlistGame: function () {
+      axios
+        .post("/wishlists", {
+          user_id: localStorage.user_id,
+          game_id: this.game[0].id,
+          image_url: this.game[0].cover.url,
+          title: this.game[0].name,
+          on_sale: this.onSale,
+        })
+        .then((response) => {
+          console.log(response.data.game.id);
+          // this.wishlistedID = response.data.game.id;
+          this.wishlisted = true;
+          console.log(this.wishlisted);
+        });
+    },
+    removeGame: function () {
       axios.delete(`/wishlists/${this.wishlistID}`).then((response) => {
         console.log(response.data);
-        let index = this.wishlist.indexOf(game);
-        this.wishlist.splice(index, 1);
-        this.$set(this.wishlisted, "listed", 0);
-      });
-    },
-    isWishlisted: function () {
-      this.wishlist.forEach((list) => {
-        if (list.game_id == this.game[0].id) {
-          this.wishlistID = list.id;
-          this.$set(this.wishlisted, "listed", 1);
-          // this.wishlisted["listed"] = 1;
-        } else {
-          this.wishlistID = list.id;
-          this.$set(this.wishlisted, "listed", 0);
-          // this.wishlisted["listed"] = 0;
-        }
-        // console.log(this.wishlistID);
-        console.log(this.wishlisted);
+        this.wishlisted = false;
       });
     },
   },

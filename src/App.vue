@@ -73,7 +73,7 @@
           </div>
           <!-- Header-->
         <div class="modal-header bg-black">
-          <div v-if="isLoggedIn()"><img src="../public/static/img/wishlistDarker.png" width="1050" height=65></div>
+          <div v-if="isLoggedIn()"><a href="/wishlists"><img src="../public/static/img/wishlistDarker.png" width="1050" height=65></a></div>
           </div>
           <div class="modal-body">
               <!-- List group -->
