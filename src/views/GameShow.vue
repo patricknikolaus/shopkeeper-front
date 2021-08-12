@@ -111,9 +111,10 @@
                                 <h4 v-if="wishlisted === false"><button class="btn btn-success me-3" v-on:click="wishlistGame">
                                   Add to wishlist
                                 </button></h4>
-                                <h4 v-else-if="wishlisted === true"><button class="btn btn-danger me-3" v-on:click="removeGame(game[0])">
+                                <h4 v-else-if="wishlisted === true"><button class="btn btn-danger me-3" v-on:click="removeGame()">
                                   Remove from wishlist
                                 </button></h4>
+                                <button @click="checkID">O</button>
                               </div>
                                 <!-- <dialog id="wishlist-add">
                                   <form method="dialog">
@@ -418,6 +419,7 @@ export default {
             this.wishlisted = true;
           }
         });
+        console.log(this.wishlistID);
       });
     },
     wishlistGame: function () {
@@ -430,17 +432,21 @@ export default {
           on_sale: this.onSale,
         })
         .then((response) => {
-          console.log(response.data.game.id);
-          // this.wishlistedID = response.data.game.id;
+          this.wishlistID = response.data.game.id;
           this.wishlisted = true;
           console.log(this.wishlisted);
+          console.log(response.data.game.id);
         });
     },
     removeGame: function () {
+      console.log(this.wishlistID);
       axios.delete(`/wishlists/${this.wishlistID}`).then((response) => {
         console.log(response.data);
         this.wishlisted = false;
       });
+    },
+    checkID: function () {
+      console.log(this.wishlistID);
     },
   },
 };
