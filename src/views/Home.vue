@@ -17,9 +17,10 @@
                         <router-link class="stretched-link" v-bind:to="`/games/${game.id}`"></router-link>
                         <div class="hover-scale-in">
                             <img class="wd-50" v-if="game.cover"
-                            :src="game.cover.url.replace('t_thumb', 't_720p')" width="400" height="450" title="" :alt="game.name">
+                            :src="game.cover.url.replace('t_thumb', 't_720p')"  height="450" title="" :alt="game.name">
                             <img v-else :src="`https://westsiderc.org/wp-content/uploads/2019/08/Image-Not-Available.png`">
                         </div>
+                            <h4>{{ game.name}}</h4>
                     </div>
                 </div>
             </div>
@@ -64,6 +65,7 @@ export default {
       search: "",
       username: [],
       wishlist: [],
+      quotes: ["hello", "goodbye", "today", "tomorrow"],
     };
   },
   created: function () {

@@ -78,9 +78,12 @@
   </div>
 
 <template>
+
 <main>
   <section class="product-details py-6">
+    
         <div class="container">
+          
             <div class="row align-items-start">
                 <!-- Product Gallery -->
                 <div class="col-lg-6 lightbox-gallery product-gallery sticky-sm-top">
@@ -108,40 +111,33 @@
                         <div class="product-detail-actions d-flex flex-wrap pt-3">
                             <div class="cart-button mb-3 d-flex">
                               <div v-if="isLoggedIn()">
-                                <h4 v-if="wishlisted === false"><button class="btn btn-success me-3" v-on:click="wishlistGame">
+                                <h4 v-if="wishlisted === false"><button class="btn btn-success me-3 btn-lg" v-on:click="wishlistGame">
                                   Add to wishlist
                                 </button></h4>
-                                <h4 v-else-if="wishlisted === true"><button class="btn btn-danger me-3" v-on:click="removeGame()">
+                                <h4 v-else-if="wishlisted === true"><button class="btn btn-danger me-3 btn-lg" v-on:click="removeGame()">
                                   Remove from wishlist
                                 </button></h4>
-                                <button @click="checkID">O</button>
                               </div>
-                                <!-- <dialog id="wishlist-add">
-                                  <form method="dialog">
-                                    <div v-if="this.errors.length === 1">
-                                      <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
-                                    </div>
-                                    <div v-else>
-                                      <p>Game added to wishlist!</p>
-                                    </div>
-                                    <button class="btn btn-danger">X</button>
-                                  </form>
-                                </dialog> -->
-                                <div><a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
-                                  <img class="twitchIcon" src="../../public/static/img/twitchbanner2.jpeg" width="34%">
+                                <div>
+                                  <!-- <a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
+                                  <img class="twitchIcon" src="../../public/static/img/twitchbanner2.jpeg" width="34%"> -->
                                   <!-- <h4><button class="btn me-3">View on Twitch</button></h4> -->
-                                </a></div>
+                                <a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
+                                  <button type="button" class="btn btn-secondary btn-lg">View on Twitch</button>
+                                </a>
+                                </div>
                                 <div></div>
                             </div>
-                            <div class="screenshotCarousel pb-4" v-if="screenshots != null">
-                            <img src="../../public/static/img/screenshots.jpg" width="50%" class="pb-1">
+                            
+                            
+
+                            <!-- <div class="screenshotCarousel" v-if="screenshots != null">
+                              <img src="../../public/static/img/screenshots.jpg" width="50%" class="pb-1">
                               <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
                                   <div class="carousel-item" v-for="(screenshot, index) in screenshots" :class="{ active: index===0}">
                                     <img :src="screenshot.url.replace('t_thumb', 't_1080p')" class="d-block w-100" alt="">
-                                    
                                   </div>
-                                </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                   <span class="visually-hidden">Previous</span>
@@ -151,7 +147,28 @@
                                   <span class="visually-hidden">Next</span>
                                 </button>
                               </div>
+                            </div> -->
+
+                            <div class="screenshotCarousel pb-2">
+                              <img src="../../public/static/img/screenshots.jpg" width="50%" class="pb-1">
+                              <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                  <div class="carousel-item" v-for="(screenshot, index) in screenshots" :class="{ active: index===0}" data-bs-interval="1000000">
+                                    <img :src="screenshot.url.replace('t_thumb', 't_1080p')" class="d-block w-100" alt="">
+                                  </div>
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                  <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                  <span class="visually-hidden">Next</span>
+                                </button>
+                              </div>
                             </div>
+                            
+                            
                             <div class="videoCarousel" v-if="videos != null">
                               <img src="../../public/static/img/videos.jpg" width="50%" class="pb-1">
                               <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -169,6 +186,7 @@
                                 </button>
                               </div>
                             </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -176,21 +194,6 @@
         </div>    
     </section>
 
-    <!-- <div class="prices" v-for="price in prices">
-      <div v-for="store in stores">
-        <div v-if="price.storeID === store.storeID">
-          <a :href="store.link + game[0].name" target="_blank"><img :src="`https://www.cheapshark.com/`+ store.images.logo"></a>
-          {{ store.storeName }}
-        </div>
-      </div>
-      <div v-if="price.isOnSale === '1'">
-        <h2>ON SALE: {{ Math.round(price.savings) }}% OFF!</h2>
-        <h3><strike>${{ price.normalPrice }}</strike></h3> 
-        <h2>${{ price.salePrice }}</h2>
-      </div>
-      <div v-else><h3>{{ price.normalPrice }}</h3></div>
-      <hr>
-    </div> -->
 <section class="section bg-gray-500">
   <div class="container">
     <div class="row justify-content-center">
@@ -246,7 +249,7 @@
       </div>
     </div>
   </section>
-
+  
     <section class="section bg-white">
             <div class="container">
                 <div class="row justify-content-center mb-7 mb-lg-7">
@@ -254,9 +257,6 @@
                         <img src="../../public/static/img/ymlt.png">
                     </div>
                 </div>
-                <!-- <div v-for="similar in similarGames">
-                  <a v-bind:href="`/games/${similar.id}`"><img :src="similar.image_url"></a>
-                </div> -->
                 <div class="row g-1">
                     <div class="col-sm-2" v-for="similar in similarGames">
                         <div class="product-card-1">

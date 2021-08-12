@@ -1,6 +1,15 @@
 <template> 
   <div id="app">
     <header class="header-main bg-white header-dark header-option-1">
+      
+      <nav>
+        <div class="col-md-12">
+          <img src="../public/static/img/header1.jpg" title="" alt="">
+        </div> 
+        <!-- <div class="col-lg-6 d-none d-lg-block">
+                      <a href="/"><img src="../public/static/img/banner2.jpg"></a>
+                  </div> -->
+      </nav>
       <div class="header-top pt-3 pb-2 py-sm-4">
           <div class="container">
               <div class="row align-items-center">
@@ -40,7 +49,8 @@
                           
                         <div class="nav-item">
                               <a class="nav-link" href="/"><h2 class="bi-arrow-clockwise"></h2></a>
-                          </div> <!-- Cart -->
+                        </div>
+                         <!-- Cart -->
                         <div class="menuToggle">
                           <div class="nav-item me-md-0 me-lg-0">
                               
@@ -63,11 +73,11 @@
       <div class="modal-content">
         <div class="mt-auto p-2 pt-0">
               <div class="pt-4">
-                  <a type="button" class="btn btn-close w-100 mb-1" data-bs-dismiss="modal"></a>
-                  <a class="btn btn-block btn-dark w-100 mb-3" href="/">Home</a>
-                  <a v-if="!isLoggedIn()" class="btn btn-block btn-dark w-100 mb-3" href="/login">Login</a>
-                  <a v-if="isLoggedIn()" class="btn btn-block btn-dark w-100 mb-1" href="/logout">Logout</a>
-                  <a v-if="!isLoggedIn()" class="btn btn-block btn-dark w-100 mb-1" href="/users">Sign Up</a>
+                  <a type="button" class="btn btn-block w-100 mb-1" data-bs-dismiss="modal"><img src="../public/static/img/close.png" width="20px" height="20px"></a>
+                  <a class="btn btn-block btn-black w-100 mb-1" href="/"><big>Home</big></a>
+                  <a v-if="!isLoggedIn()" class="btn btn-block btn-black w-100 mb-1" href="/login"><big>Login</big></a>
+                  <a v-if="isLoggedIn()" class="btn btn-block btn-black w-100 mb-1" href="/logout"><big>Logout</big></a>
+                  <a v-if="!isLoggedIn()" class="btn btn-block btn-black w-100 mb-1" href="/users"><big>Sign Up</big></a>
                   <!-- <a v-if="isLoggedIn()" class="btn btn-block btn-dark w-100 mb-3" href="/wishlists">Wishlist</a> -->
               </div>
           </div>
@@ -105,32 +115,31 @@
                   </li>
               </ul>
           </div>
+
           <!-- Footer -->
+
           <!-- Buttons -->
       </div>
   </div>
 </div>
-<nav class="navbar navbar-expand-md navbar-dark bg-black py-3">
-          <div class="container">
-              <!-- Menu -->
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav mx-auto">
-                      <li class="nav-item">
-                          <a href="#" class="nav-link"></a>
-                          <label></label>
-                          <div class="dropdown-menu left shadow-lg">
-                          </div>
-                      </li>
-                  </ul>
-              </div>
-              <!-- End Menu -->
-          </div>
-     </nav>
+<!-- <nav class="navbar navbar-expand-md navbar-dark bg-white py-3">
+  <div class="col-md-12">
+    <img src="../public/static/img/header1.jpg" title="" alt="">
+  </div> 
+</nav> -->
       <!-- End Top Header -->
       
     </header>  
 
     <router-view/>
+
+    <footer>  
+      <!-- <div class="col-md-12 py-5"> -->
+          <img src="../public/static/img/footer3.jpg" title="" alt="">
+      
+                   
+        
+    </footer>
 
   </div>
 </template>
