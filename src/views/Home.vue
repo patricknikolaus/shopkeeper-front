@@ -16,11 +16,11 @@
                     <div class="position-relative hover-scale">
                         <router-link class="stretched-link" v-bind:to="`/games/${game.id}`"></router-link>
                         <div class="hover-scale-in">
-                            <img class="wd-50" v-if="game.cover"
-                            :src="game.cover.url.replace('t_thumb', 't_720p')"  height="450" title="" :alt="game.name">
+                            <img class="wd-100" v-if="game.cover"
+                            :src="game.cover.url.replace('t_thumb', 't_1080p')" height="325px" width="250"  title="" :alt="game.name">
                             <img v-else :src="`https://westsiderc.org/wp-content/uploads/2019/08/Image-Not-Available.png`">
                         </div>
-                            <h4>{{ game.name}}</h4>
+                            <!-- <h6>{{ game.name}}</h6> -->
                     </div>
                 </div>
             </div>

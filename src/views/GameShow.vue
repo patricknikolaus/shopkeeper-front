@@ -86,10 +86,10 @@
           
             <div class="row align-items-start">
                 <!-- Product Gallery -->
-                <div class="col-lg-6 lightbox-gallery product-gallery sticky-sm-top">
+                <div class="col-lg-6 lightbox-gallery product-gallery sticky-lg-top">
                     <div>
                         <div>
-                            <img v-if="game[0].cover" :src="game[0].cover.url.replace('t_thumb', 't_1080p')" width="2000" :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
+                            <img v-if="game[0].cover" :src="game[0].cover.url.replace('t_thumb', 't_1080p')"  :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
                         </div>
                     </div>
                 </div>
@@ -149,7 +149,7 @@
                               </div>
                             </div> -->
 
-                            <div class="screenshotCarousel pb-2">
+                            <div class="screenshotCarousel pb-4">
                               <img src="../../public/static/img/screenshots.jpg" width="50%" class="pb-1">
                               <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
@@ -167,6 +167,8 @@
                                 </button>
                               </div>
                             </div>
+
+                            
                             
                             
                             <div class="videoCarousel" v-if="videos != null">
@@ -185,6 +187,15 @@
                                   <span class="visually-hidden">Next</span>
                                 </button>
                               </div>
+                            </div>
+                            <div class="pb-1">
+                              <img src="../../public/static/img/twitchheader.png" width="25%" class="pb-1">
+                              <iframe
+                                  :src="`https://player.twitch.tv/?channel=${this.streamName}&parent=localhost`"
+                                  height="345"
+                                  width="640"
+                                  allowfullscreen="true">
+                              </iframe>
                             </div>
                             </div>
                         </div>
@@ -207,7 +218,8 @@
                     <div class="badge-ribbon position-absolute top-0 start-0">
                       <h4> <span class="badge bg-danger"><small>{{ Math.round(price.savings) }}%<div>OFF</div></small></span></h4>
                     </div>
-                    <a :href="`https://www.cheapshark.com/redirect?dealID=`+ price.dealID" target="_blank">
+                    <a :href="store.link + game[0].name" target="_blank">
+                      <!-- https://www.cheapshark.com/redirect?dealID= -->
                         <img class="img-fluid" :src="`https://www.cheapshark.com/`+ store.images.logo">
                     </a> 
                 </div>
@@ -312,6 +324,8 @@ export default {
       wishlist: [],
       wishlisted: false,
       wishlistID: 0,
+      streamID: [],
+      streamName: [],
     };
   },
   mounted: function () {},
@@ -321,7 +335,7 @@ export default {
   methods: {
     gameShow: function () {
       axios.post(`/games/${this.$route.params.id}`).then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         this.game = response.data;
         this.similarGames = response.data[0].similar_games;
         this.title = response.data[0].name.split(" ").join("").toLowerCase();
@@ -331,6 +345,7 @@ export default {
         this.storeName();
         this.getBoxarts();
         this.getWishlist();
+        this.twitchID();
       });
     },
     gamePrice: function () {
@@ -340,7 +355,7 @@ export default {
         })
         .then((response) => {
           this.prices = response.data;
-          console.log(response.data);
+          // console.log(response.data);
         });
     },
     storeName: function () {
@@ -348,7 +363,7 @@ export default {
         .get("https://www.cheapshark.com/api/1.0/stores")
         .then((response) => {
           this.stores = response.data;
-          // this.addStoreLinks();
+          this.addStoreLinks();
         });
     },
     getBoxarts: function () {
@@ -358,50 +373,50 @@ export default {
         });
       });
     },
-    // addStoreLinks: function () {
-    //   this.stores.forEach((store) => {
-    //     if (store.storeID === "1") {
-    //       store["link"] = "https://store.steampowered.com/search/?term=";
-    //     } else if (store.storeID === "2") {
-    //       store["link"] = "https://www.gamersgate.com/games/?query=";
-    //     } else if (store.storeID === "3") {
-    //       store["link"] = "https://www.greenmangaming.com/search?query=";
-    //     } else if (store.storeID === "6") {
-    //       store["link"] = "https://www.direct2drive.com/#!/search?q=";
-    //     } else if (store.storeID === "7") {
-    //       store["link"] = "https://www.gog.com/games?search=";
-    //     } else if (store.storeID === "8") {
-    //       store["link"] =
-    //         "https://www.origin.com/usa/en-us/search?searchString=";
-    //     } else if (store.storeID === "11") {
-    //       store["link"] = "https://www.humblebundle.com/store/search?search=";
-    //     } else if (store.storeID === "13") {
-    //       store["link"] = "https://store.ubi.com/us/home/?lang=en_US";
-    //     } else if (store.storeID === "15") {
-    //       store["link"] = "https://www.fanatical.com/en/search?search=";
-    //     } else if (store.storeID === "21") {
-    //       store["link"] = "https://www.wingamestore.com/search/?SearchWord=";
-    //     } else if (store.storeID === "23") {
-    //       store["link"] = "https://www.gamebillet.com/search?q=";
-    //     } else if (store.storeID === "24") {
-    //       store["link"] = "https://www.voidu.com/en/search?q=";
-    //     } else if (store.storeID === "25") {
-    //       store["link"] = "https://www.epicgames.com/store/en-US/browse?q=";
-    //     } else if (store.storeID === "27") {
-    //       store["link"] = "https://us.gamesplanet.com/search?query=";
-    //     } else if (store.storeID === "28") {
-    //       store["link"] = "https://www.gamesload.com/results.html?search=";
-    //     } else if (store.storeID === "29") {
-    //       store["link"] = "https://2game.com/en-us/catalogsearch/result/?q=";
-    //     } else if (store.storeID === "30") {
-    //       store["link"] = "https://www.indiegala.com/search/";
-    //     } else if (store.storeID === "31") {
-    //       store["link"] = "https://us.shop.battle.net/en-us/family/";
-    //     } else if (store.storeID === "32") {
-    //       store["link"] = "https://www.allyouplay.com/en/search?q=";
-    //     }
-    //   });
-    // },
+    addStoreLinks: function () {
+      this.stores.forEach((store) => {
+        if (store.storeID === "1") {
+          store["link"] = "https://store.steampowered.com/search/?term=";
+        } else if (store.storeID === "2") {
+          store["link"] = "https://www.gamersgate.com/games/?query=";
+        } else if (store.storeID === "3") {
+          store["link"] = "https://www.greenmangaming.com/search?query=";
+        } else if (store.storeID === "6") {
+          store["link"] = "https://www.direct2drive.com/#!/search?q=";
+        } else if (store.storeID === "7") {
+          store["link"] = "https://www.gog.com/games?search=";
+        } else if (store.storeID === "8") {
+          store["link"] =
+            "https://www.origin.com/usa/en-us/search?searchString=";
+        } else if (store.storeID === "11") {
+          store["link"] = "https://www.humblebundle.com/store/search?search=";
+        } else if (store.storeID === "13") {
+          store["link"] = "https://store.ubi.com/us/home/?lang=en_US";
+        } else if (store.storeID === "15") {
+          store["link"] = "https://www.fanatical.com/en/search?search=";
+        } else if (store.storeID === "21") {
+          store["link"] = "https://www.wingamestore.com/search/?SearchWord=";
+        } else if (store.storeID === "23") {
+          store["link"] = "https://www.gamebillet.com/search?q=";
+        } else if (store.storeID === "24") {
+          store["link"] = "https://www.voidu.com/en/search?q=";
+        } else if (store.storeID === "25") {
+          store["link"] = "https://www.epicgames.com/store/en-US/browse?q=";
+        } else if (store.storeID === "27") {
+          store["link"] = "https://us.gamesplanet.com/search?query=";
+        } else if (store.storeID === "28") {
+          store["link"] = "https://www.gamesload.com/results.html?search=";
+        } else if (store.storeID === "29") {
+          store["link"] = "https://2game.com/en-us/catalogsearch/result/?q=";
+        } else if (store.storeID === "30") {
+          store["link"] = "https://www.indiegala.com/search/";
+        } else if (store.storeID === "31") {
+          store["link"] = "https://us.shop.battle.net/en-us/family/";
+        } else if (store.storeID === "32") {
+          store["link"] = "https://www.allyouplay.com/en/search?q=";
+        }
+      });
+    },
     isLoggedIn: function () {
       if (localStorage.getItem("jwt")) {
         return true;
@@ -411,7 +426,7 @@ export default {
     },
     getWishlist: function () {
       axios.get("/wishlists").then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         this.wishlist = response.data;
         this.username = localStorage.username;
         this.wishlist.forEach((list) => {
@@ -420,7 +435,7 @@ export default {
             this.wishlisted = true;
           }
         });
-        console.log(this.wishlistID);
+        // console.log(this.wishlistID);
       });
     },
     wishlistGame: function () {
@@ -442,12 +457,33 @@ export default {
     removeGame: function () {
       console.log(this.wishlistID);
       axios.delete(`/wishlists/${this.wishlistID}`).then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         this.wishlisted = false;
       });
     },
     checkID: function () {
-      console.log(this.wishlistID);
+      // console.log(this.wishlistID);
+    },
+    twitchID: function () {
+      axios
+        .get("/twitch", {
+          params: { name: this.game[0].name.split(" ").join("%20") },
+        })
+        .then((response) => {
+          // console.log(response.data.data[0].id);
+          this.streamID = response.data.data[0].id;
+          console.log(response.data.data[0].id);
+          console.log(this.streamID);
+          this.twitchChannel();
+        });
+    },
+    twitchChannel: function () {
+      axios
+        .get("twitch/channel", { params: { game_id: this.streamID } })
+        .then((response) => {
+          console.log(response.data.data[0].user_login);
+          this.streamName = response.data.data[0].user_login;
+        });
     },
   },
 };

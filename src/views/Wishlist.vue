@@ -40,7 +40,8 @@
                             
 
                         </div>
-      <!-- <button >remove</button> -->
+                        
+      <button >remove</button>
                     </div>
                 </div>
             </div>

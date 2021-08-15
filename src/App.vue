@@ -4,13 +4,13 @@
       
       <nav>
         <div class="col-md-12">
-          <img src="../public/static/img/header1.jpg" title="" alt="">
+          <img src="../public/static/img/header2.png" title="" alt="">
         </div> 
         <!-- <div class="col-lg-6 d-none d-lg-block">
                       <a href="/"><img src="../public/static/img/banner2.jpg"></a>
                   </div> -->
       </nav>
-      <div class="header-top pt-3 pb-2 py-sm-4">
+      <div class="header-top">
           <div class="container">
               <div class="row align-items-center">
                   <div class="col-md-1 col-lg-3 text-center text-md-start">
@@ -69,9 +69,9 @@
       </div>
       <div class="modal px-modal-right fade" id="modalMiniCart" tabindex="-1" role="dialog" aria-hidden="true">
   <!-- Shopping Cart -->
-  <div class="modal-dialog px-modal-vertical">
-      <div class="modal-content">
-        <div class="mt-auto p-2 pt-0">
+  <div class="modal-dialog px-modal-vertical bg-white">
+      <div class="modal-content bg-white">
+        <div class="mt-auto p-2 pt-0 sticky-sm-top bg-white">
               <div class="pt-4">
                   <a type="button" class="btn btn-block w-100 mb-1" data-bs-dismiss="modal"><img src="../public/static/img/close.png" width="20px" height="20px"></a>
                   <a class="btn btn-block btn-black w-100 mb-1" href="/"><big>Home</big></a>
@@ -79,12 +79,13 @@
                   <a v-if="isLoggedIn()" class="btn btn-block btn-black w-100 mb-1" href="/logout"><big>Logout</big></a>
                   <a v-if="!isLoggedIn()" class="btn btn-block btn-black w-100 mb-1" href="/users"><big>Sign Up</big></a>
                   <!-- <a v-if="isLoggedIn()" class="btn btn-block btn-dark w-100 mb-3" href="/wishlists">Wishlist</a> -->
+                  <div v-if="isLoggedIn()"><a href="/wishlists"><img src="../public/static/img/wishlistDarker.png" width="1050" height=65></a></div>
               </div>
           </div>
           <!-- Header-->
-        <div class="modal-header bg-black">
-          <div v-if="isLoggedIn()"><a href="/wishlists"><img src="../public/static/img/wishlistDarker.png" width="1050" height=65></a></div>
-          </div>
+        <!-- <div class="modal-header bg-white sticky-lg-top"> -->
+          <!-- <div v-if="isLoggedIn()"><a href="/wishlists"><img src="../public/static/img/wishlistDarker.png" width="1050" height=65></a></div> -->
+          <!-- </div> -->
           <div class="modal-body">
               <!-- List group -->
               <ul class="list-unstyled m-0 p-0">
@@ -187,6 +188,7 @@ export default {
         // console.log(response.data);
         let index = this.wishlist.indexOf(game);
         this.wishlist.splice(index, 1);
+        this.wishlisted = false;
       });
     },
   },
