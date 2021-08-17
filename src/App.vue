@@ -24,6 +24,7 @@
                   <div class="col-lg-6 d-none d-lg-block">
                       <a href="/"><img src="../public/static/img/banner2.jpg"></a>
                   </div>
+                  
                   <div class="col-md-6 col-lg-3">
                       <div class="nav flex-nowrap align-items-center justify-content-md-end header-right header-right-light w-100 w-md-auto position-relative">
                           <!-- Nav Search-->

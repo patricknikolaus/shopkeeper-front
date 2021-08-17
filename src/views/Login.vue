@@ -73,6 +73,7 @@ export default {
           localStorage.setItem("jwt", response.data.jwt);
           localStorage.setItem("user_id", response.data.user_id);
           localStorage.setItem("username", response.data.username);
+          localStorage.setItem("email", response.data.email);
           this.$router.push("/");
         })
         .catch((error) => {

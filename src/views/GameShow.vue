@@ -80,9 +80,11 @@
 <template>
 
 <main>
+  
   <section class="product-details py-6">
     
         <div class="container">
+          
           
             <div class="row align-items-start">
                 <!-- Product Gallery -->
@@ -118,15 +120,12 @@
                                   Remove from wishlist
                                 </button></h4>
                               </div>
-                                <div>
-                                  <!-- <a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
-                                  <img class="twitchIcon" src="../../public/static/img/twitchbanner2.jpeg" width="34%"> -->
-                                  <!-- <h4><button class="btn me-3">View on Twitch</button></h4> -->
+                                <!-- <div>
                                 <a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
                                   <button type="button" class="btn btn-secondary btn-lg">View on Twitch</button>
                                 </a>
                                 </div>
-                                <div></div>
+                                <div></div> -->
                             </div>
                             
                             
@@ -171,7 +170,7 @@
                             
                             
                             
-                            <div class="videoCarousel" v-if="videos != null">
+                            <div class="videoCarousel pb-2" v-if="videos != null">
                               <img src="../../public/static/img/videos.jpg" width="50%" class="pb-1">
                               <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
@@ -188,10 +187,11 @@
                                 </button>
                               </div>
                             </div>
-                            <div class="pb-1">
+                            
+                            <div class="pt-4" v-if="twitchChannel != null">
                               <img src="../../public/static/img/twitchheader.png" width="25%" class="pb-1">
                               <iframe
-                                  :src="`https://player.twitch.tv/?channel=${this.streamName}&parent=localhost`"
+                                  :src="`https://player.twitch.tv/?channel=${streamName}&parent=localhost`"
                                   height="345"
                                   width="640"
                                   allowfullscreen="true">
@@ -355,7 +355,8 @@ export default {
         })
         .then((response) => {
           this.prices = response.data;
-          // console.log(response.data);
+          console.log(response.data);
+          this.onSale = response.data[0].gameID;
         });
     },
     storeName: function () {
@@ -481,7 +482,7 @@ export default {
       axios
         .get("twitch/channel", { params: { game_id: this.streamID } })
         .then((response) => {
-          console.log(response.data.data[0].user_login);
+          console.log(response.data.data);
           this.streamName = response.data.data[0].user_login;
         });
     },
