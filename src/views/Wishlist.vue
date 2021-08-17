@@ -6,9 +6,6 @@
   <section class="py-3">
     <div class="container">
       </div>
-      <div class="d-grid gap-2 d-md-flex justify-content-center mb-3">
-        <button v-on:click="manageAlerts" class="btn btn-black me-md-2" type="button">Manage alerts</button>
-      </div>
         <div class="container-fluid">
             <div class="row g-3 justify-content-center">
                 <div class="col-lg-2" v-for="game in wishlist" v-bind:key="game.id" >
@@ -35,6 +32,24 @@
                         </button>
                     </div>
                 </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-center mb-3">
+                  <button v-on:click="manageAlerts" class="btn btn-black me-md-2" type="button">Manage alerts</button>
+                </div>
+                </div>
+                  <dialog id="alert-manage">
+                    <form method="dialog">
+                      <p>A link was sent to your email</p>
+                      <p><button class="btn btn-block btn-black w-100">Close</button></p>
+                    </form>
+                  </dialog>
+                  <dialog id="alert-confirm">
+                    <form method="dialog">
+                      <p class="justify-text-center">Alert set!</p>
+                      <p><button class="btn btn-block btn-black w-100">Close</button></p>
+                    </form>
+                  </dialog>
+                </div>
+                
             </div>
         </div>
 
@@ -90,12 +105,18 @@ export default {
           price: this.alertPrice,
         },
       });
+      document.querySelector("#alert-confirm").showModal();
       console.log("alert set");
     },
     manageAlerts: function () {
-      axios.get("https://www.cheapshark.com/api/1.0/alerts", {
-        params: { actions: "manage", email: this.email },
-      });
+      axios
+        .get("https://www.cheapshark.com/api/1.0/alerts", {
+          params: { action: "manage", email: this.email },
+        })
+        .then((response) => {
+          console.log(response.data);
+        });
+      document.querySelector("#alert-manage").showModal();
     },
   },
 };
