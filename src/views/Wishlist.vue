@@ -1,14 +1,11 @@
 <template>
- 
-
-
-  
   <section class="py-3">
     <div class="container">
       </div>
         <div class="container-fluid">
             <div class="row g-3 justify-content-center">
-                <div class="col-lg-2" v-for="game in wishlist" v-bind:key="game.id" >
+                <div class="col-lg-2" v-for="(game, index) in wishlist" v-bind:key="game.id" >
+                  <!-- <div class="mt-4"><h5>{{ game.title }}</h5></div> -->
                     <div class="position-relative hover-scale">
                         <router-link class="stretched-link" v-bind:to="`/games/${game.game_id}`">
                           <img
@@ -19,16 +16,16 @@
                         </router-link>
                     </div>
                     <div class="removeButton">
-                        <button v-on:click="removeGame(game)" class="btn btn-block btn-black w-100">Remove</button>
+                        <button v-on:click="removeGame(game)" class="btn btn-block btn-danger w-100">Remove</button>
                     </div>
                     <big>Alert me when this game is under:</big>
-                        <div id="priceInput" class="input-group w-50">
+                        <div id="priceInput" class="input-group w-100">
                           <span class="input-group-text">$</span>
-                          <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" v-model="alertPrice">
+                          <input type="number" class="form-control" v-model="alertPrice[index]">
                           <span class="input-group-text">.00</span>
                         </div>
                     <div class="removeButton mt-2">
-                        <button v-on:click="setAlert(game.on_sale)" class="btn btn-block btn-black w-100">Set alert
+                        <button v-on:click="setAlert(game.on_sale)" class="btn btn-block btn-success w-100">Set alert
                         </button>
                     </div>
                 </div>
@@ -49,12 +46,9 @@
                     </form>
                   </dialog>
                 </div>
-                
             </div>
         </div>
-
     </section>
-
 </template>
 
 <style>
@@ -76,7 +70,7 @@ export default {
       message: "Wishlist Page",
       username: localStorage.username,
       email: localStorage.email,
-      alertPrice: "",
+      alertPrice: [],
     };
   },
   created: function () {

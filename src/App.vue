@@ -76,6 +76,7 @@
               <div class="pt-4">
                   <a type="button" class="btn btn-block w-100 mb-1" data-bs-dismiss="modal"><img src="../public/static/img/close.png" width="20px" height="20px"></a>
                   <a class="btn btn-block btn-black w-100 mb-1" href="/"><big>Home</big></a>
+                  <!-- <a v-if="!isLoggedIn()" v-on:click="twitchLogin" class="btn btn-block btn-black w-100 mb-1" href="/"><big>Login with twitch</big></a> -->
                   <a v-if="!isLoggedIn()" class="btn btn-block btn-black w-100 mb-1" href="/login"><big>Login</big></a>
                   <a v-if="isLoggedIn()" class="btn btn-block btn-black w-100 mb-1" href="/logout"><big>Logout</big></a>
                   <a v-if="!isLoggedIn()" class="btn btn-block btn-black w-100 mb-1" href="/users"><big>Sign Up</big></a>
