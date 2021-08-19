@@ -473,8 +473,8 @@ export default {
         .then((response) => {
           // console.log(response.data.data[0].id);
           this.streamID = response.data.data[0].id;
-          console.log(response.data.data[0].id);
-          console.log(this.streamID);
+          // console.log(response.data.data[0].id);
+          // console.log(this.streamID);
           this.twitchChannel();
         });
     },
@@ -482,8 +482,14 @@ export default {
       axios
         .get("twitch/channel", { params: { game_id: this.streamID } })
         .then((response) => {
-          console.log(response.data.data);
-          this.streamName = response.data.data[0].user_login;
+          // console.log(response.data.data);
+          // this.streamName = response.data.data[0].user_login;
+          let channels = response.data.data;
+          channels.forEach((channel) => {
+            if (channel.language === "en") {
+              this.streamName = channel.user_login;
+            }
+          });
         });
     },
   },
