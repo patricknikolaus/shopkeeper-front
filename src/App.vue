@@ -48,9 +48,7 @@
                           <!-- Acount -->
                           <!-- Wishlist -->
                           
-                        <div class="nav-item">
-                              <a class="nav-link" href="/"><h2 class="bi-arrow-clockwise"></h2></a>
-                        </div>
+                        
                          <!-- Cart -->
                         <div class="menuToggle">
                           <div class="nav-item me-md-0 me-lg-0">
@@ -191,6 +189,12 @@ export default {
         let index = this.wishlist.indexOf(game);
         this.wishlist.splice(index, 1);
         this.wishlisted = false;
+      });
+    },
+    searchGame: function () {
+      axios.post("/games", { search: this.search }).then((response) => {
+        this.games = response.data;
+        console.log(response.data);
       });
     },
   },

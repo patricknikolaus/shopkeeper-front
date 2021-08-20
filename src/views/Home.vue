@@ -3,6 +3,9 @@
     <div class="container">
         <div class="searchbar">
             <div class="input-group">
+              <button class="btn2 btn-dark btn-md shadow-none px-3" v-on:click="searchGame">
+                    <i class="bi bi-arrow-clockwise"></i>
+                </button>
                 <input class="form-control form-control-lg shadow-none px-2" type="text" v-model="search" v-on:keyup.enter="searchGame" placeholder="Khajiit has wares, if you have coin...">
                 <button class="btn2 btn-dark btn-md shadow-none px-3" v-on:click="searchGame">
                     <i class="bi bi-joystick"></i>

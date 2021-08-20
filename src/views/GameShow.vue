@@ -269,7 +269,7 @@
                         <img src="../../public/static/img/ymlt.png">
                     </div>
                 </div>
-                <div class="row g-1">
+                <div class="row g-1 justify-content-center">
                     <div class="col-sm-2" v-for="similar in similarGames">
                         <div class="product-card-1">
                             <div class="product-card-image">
