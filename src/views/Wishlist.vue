@@ -25,7 +25,7 @@
                           <span class="input-group-text">.00</span>
                         </div>
                     <div class="removeButton mt-2">
-                        <button v-on:click="setAlert(game.on_sale)" class="btn btn-block btn-success w-100">Set alert
+                        <button v-on:click="setAlert(game.on_sale, index)" class="btn btn-block btn-success w-100">Set alert
                         </button>
                     </div>
                 </div>
@@ -87,16 +87,17 @@ export default {
       axios.delete(`/wishlists/${game.id}`).then((response) => {
         console.log(response.data);
         let index = this.wishlist.indexOf(game);
+        console.log(index);
         this.wishlist.splice(index, 1);
       });
     },
-    setAlert: function (game) {
+    setAlert: function (game, index) {
       axios.get("https://www.cheapshark.com/api/1.0/alerts", {
         params: {
           action: "set",
           email: this.email,
           gameID: game,
-          price: this.alertPrice,
+          price: this.alertPrice[index],
         },
       });
       document.querySelector("#alert-confirm").showModal();
