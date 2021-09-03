@@ -4,8 +4,7 @@
       </div>
         <div class="container-fluid">
             <div class="row g-3 justify-content-center">
-                <div class="col-lg-2" v-for="(game, index) in wishlist" v-bind:key="game.id" >
-                  <!-- <div class="mt-4"><h5>{{ game.title }}</h5></div> -->
+                <div class="col-lg-2" v-for="(game, index) in wishlist" v-bind:key="game.id" >        
                     <div class="position-relative hover-scale">
                         <router-link class="stretched-link" v-bind:to="`/games/${game.game_id}`">
                           <img
@@ -79,15 +78,12 @@ export default {
   methods: {
     getWishlist: function () {
       axios.get("/wishlists").then((response) => {
-        console.log(response.data);
         this.wishlist = response.data;
       });
     },
     removeGame: function (game) {
       axios.delete(`/wishlists/${game.id}`).then((response) => {
-        console.log(response.data);
         let index = this.wishlist.indexOf(game);
-        console.log(index);
         this.wishlist.splice(index, 1);
       });
     },
@@ -101,16 +97,11 @@ export default {
         },
       });
       document.querySelector("#alert-confirm").showModal();
-      console.log("alert set");
     },
     manageAlerts: function () {
-      axios
-        .get("https://www.cheapshark.com/api/1.0/alerts", {
-          params: { action: "manage", email: this.email },
-        })
-        .then((response) => {
-          console.log(response.data);
-        });
+      axios.get("https://www.cheapshark.com/api/1.0/alerts", {
+        params: { action: "manage", email: this.email },
+      });
       document.querySelector("#alert-manage").showModal();
     },
   },

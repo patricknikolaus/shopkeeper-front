@@ -1,93 +1,8 @@
-<div class="home">
-    <h1>{{ message }}</h1>
-    <!-- COVER -->
-    <div class="cover">
-      <img v-if="game[0].cover" :src="game[0].cover.url.replace('t_thumb', 't_1080p')" :alt="game[0].name"><img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
-    </div>
-    <!-- END COVER -->
-    <!-- TITLE -->
-    <div class="title">
-      <h2>{{ game[0].name }}</h2>
-    </div>
-    <!-- END TITLE -->
-    <!-- WISHLIST BUTTON -->
-    <div class="wishlistButton">
-      <button v-on:click="wishlistGame">add to wishlist</button>
-      <dialog id="wishlist-add">
-        <form method="dialog">
-          <div v-if="this.errors.length === 1">
-            <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
-          </div>
-          <div v-else>
-            <p>Game added to wishlist!</p>
-          </div>
-          <button>X</button>
-        </form>
-      </dialog>
-    </div>
-    <!-- END WISHLIST BUTTON -->
-    <!-- TWITCH -->
-    <div class="twitch">
-      <a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
-        <img class="twitchIcon" src="../assets/twitch.png"/>
-      </a> View gameplay on Twitch!
-    </div>
-    <!-- TWITCH END -->
-    <!-- GENRES -->
-    <div class="genres">
-      <p v-for="genre in game[0].genres">{{ genre.name }}</h2>
-      <h2>{{ Math.round(game[0].rating) }}/100</h2>
-      <h4>{{ game[0].summary }}</h4>
-    </div>
-    <!-- END GENRES -->
-    <!-- VIDEOS -->
-    <div class="videos" v-for="video in videos">
-      <youtube :video-id="video.video_id" player-width="640" player-height="370"></youtube> 
-    </div>
-    <!-- END VIDEO -->
-    <!-- SCREENSHOT -->
-    <div class="screenshot" v-for="screenshot in screenshots">
-        <img v-if="screenshot.url" :src="screenshot.url.replace('t_thumb', 't_1080p')" :alt="game[0].name">
-        <img v-else src="https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" />
-    </div>
-    <!-- END SCREENSHOT -->
-    <!-- SIMILAR GAMES -->
-    <div v-for="similar in similarGames">
-      <a v-bind:href="`/games/${similar.id}`"><img :src="similar.image_url"></a>
-    </div>
-    <!-- END SIMILAR GAMES -->
-    <hr>
-    <!-- PRICES -->
-    <div class="prices" v-for="price in prices">
-      <div v-for="store in stores">
-        <div v-if="price.storeID === store.storeID">
-          <a :href="store.link + game[0].name" target="_blank"><img :src="`https://www.cheapshark.com/`+ store.images.logo"></a>
-          {{ store.storeName }}
-        </div>
-      </div>
-      <div v-if="price.isOnSale === '1'">
-        <h2>ON SALE: {{ Math.round(price.savings) }}% OFF!</h2>
-        <h3><strike>${{ price.normalPrice }}</strike></h3> 
-        <h2>${{ price.salePrice }}</h2>
-      </div>
-      <div v-else><h3>{{ price.normalPrice }}</h3></div>
-      <hr>
-    </div>
-    <!-- END PRICES -->
-    </div>
-  </div>
-
 <template>
-
-<main>
-  
-  <section class="product-details py-6">
-    
+  <main>
+    <section class="product-details py-6">
         <div class="container">
-          
-          
             <div class="row align-items-start">
-                <!-- Product Gallery -->
                 <div class="col-lg-6 lightbox-gallery product-gallery sticky-lg-top">
                     <div>
                         <div>
@@ -98,7 +13,7 @@
                 <div class="col-lg-6 ps-lg-3 pt-3 pt-lg-1">
                     <div class="product-detail">
                         <div class="products-title mb-1">
-                            <h1 class="h1">{{ game[0].name }}</h1>
+                            <h1 class="h1"><big>{{ game[0].name }}</big></h1>
                         </div>
                           <li v-for="(genre, index) in game[0].genres"><p v-if="index === game[0].genres.length - 1">{{ ` `+ genre.name + ` `}}</p><p v-else> {{ ` `+ genre.name +` ` }}/</p></li>
                         <div>
@@ -120,34 +35,7 @@
                                   Remove from wishlist
                                 </button></h4>
                               </div>
-                                <!-- <div>
-                                <a :href="`https://www.twitch.tv/directory/game/` + game[0].name.split(' ').join('%20')" target="_blank">
-                                  <button type="button" class="btn btn-secondary btn-lg">View on Twitch</button>
-                                </a>
-                                </div>
-                                <div></div> -->
-                            </div>
-                            
-                            
-
-                            <!-- <div class="screenshotCarousel" v-if="screenshots != null">
-                              <img src="../../public/static/img/screenshots.jpg" width="50%" class="pb-1">
-                              <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                                <div class="carousel-inner">
-                                  <div class="carousel-item" v-for="(screenshot, index) in screenshots" :class="{ active: index===0}">
-                                    <img :src="screenshot.url.replace('t_thumb', 't_1080p')" class="d-block w-100" alt="">
-                                  </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                  <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                  <span class="visually-hidden">Next</span>
-                                </button>
-                              </div>
-                            </div> -->
-
+                            </div>                            
                             <div class="screenshotCarousel pb-4">
                               <img src="../../public/static/img/screenshots.jpg" width="50%" class="pb-1">
                               <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
@@ -166,10 +54,6 @@
                                 </button>
                               </div>
                             </div>
-
-                            
-                            
-                            
                             <div class="videoCarousel pb-2" v-if="videos != null">
                               <img src="../../public/static/img/videos.jpg" width="50%" class="pb-1">
                               <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -187,7 +71,6 @@
                                 </button>
                               </div>
                             </div>
-                            
                             <div class="pt-4" v-if="twitchChannel != null">
                               <img src="../../public/static/img/twitchheader.png" width="25%" class="pb-1">
                               <iframe
@@ -204,7 +87,6 @@
             </div>
         </div>    
     </section>
-
 <section class="section bg-gray-500">
   <div class="container">
     <div class="row justify-content-center">
@@ -219,7 +101,7 @@
                       <h4> <span class="badge bg-danger"><small>{{ Math.round(price.savings) }}%<div>OFF</div></small></span></h4>
                     </div>
                     <a :href="store.link + game[0].name" target="_blank">
-                      <!-- https://www.cheapshark.com/redirect?dealID= -->
+                    
                         <img class="img-fluid" :src="`https://www.cheapshark.com/`+ store.images.logo">
                     </a> 
                 </div>
@@ -235,7 +117,7 @@
                     </div>               
                   </div>
                 </div>
-                <!-- ELSE -->
+
                 <div v-else>
                   <div class="product-card-image">
                   <div class="product-media position-relative">
@@ -253,7 +135,7 @@
                     </div>
                   </div>
                 </div>
-                <!-- end else -->
+            
               </div>
             </div>
           </div>
@@ -287,20 +169,15 @@
                 </div>
             </div>
         </section>
-  </main>
-  
-
-  
+  </main> 
 </template>
 
 
 <style>
 li {
   display: inline-block;
-  /* You can also add some margins here to make it look prettier */
   zoom: 1;
   *display: inline;
-  /* this fix is needed for IE7- */
 }
 .product-price2 {
   margin: 0, auto;
@@ -335,7 +212,6 @@ export default {
   methods: {
     gameShow: function () {
       axios.post(`/games/${this.$route.params.id}`).then((response) => {
-        // console.log(response.data);
         this.game = response.data;
         this.similarGames = response.data[0].similar_games;
         this.title = response.data[0].name.split(" ").join("").toLowerCase();
@@ -355,7 +231,6 @@ export default {
         })
         .then((response) => {
           this.prices = response.data;
-          console.log(response.data);
           this.onSale = response.data[0].gameID;
         });
     },
@@ -427,7 +302,6 @@ export default {
     },
     getWishlist: function () {
       axios.get("/wishlists").then((response) => {
-        // console.log(response.data);
         this.wishlist = response.data;
         this.username = localStorage.username;
         this.wishlist.forEach((list) => {
@@ -436,7 +310,6 @@ export default {
             this.wishlisted = true;
           }
         });
-        // console.log(this.wishlistID);
       });
     },
     wishlistGame: function () {
@@ -451,19 +324,12 @@ export default {
         .then((response) => {
           this.wishlistID = response.data.game.id;
           this.wishlisted = true;
-          console.log(this.wishlisted);
-          console.log(response.data.game.id);
         });
     },
     removeGame: function () {
-      console.log(this.wishlistID);
       axios.delete(`/wishlists/${this.wishlistID}`).then((response) => {
-        // console.log(response.data);
         this.wishlisted = false;
       });
-    },
-    checkID: function () {
-      // console.log(this.wishlistID);
     },
     twitchID: function () {
       axios
@@ -471,10 +337,7 @@ export default {
           params: { name: this.game[0].name.split(" ").join("%20") },
         })
         .then((response) => {
-          // console.log(response.data.data[0].id);
           this.streamID = response.data.data[0].id;
-          // console.log(response.data.data[0].id);
-          // console.log(this.streamID);
           this.twitchChannel();
         });
     },
@@ -482,14 +345,13 @@ export default {
       axios
         .get("twitch/channel", { params: { game_id: this.streamID } })
         .then((response) => {
-          // console.log(response.data.data);
-          // this.streamName = response.data.data[0].user_login;
-          let channels = response.data.data;
-          channels.forEach((channel) => {
-            if (channel.language === "en") {
-              this.streamName = channel.user_login;
-            }
-          });
+          this.streamName = response.data.data[0].user_login;
+          // let channels = response.data.data;
+          // channels.forEach((channel) => {
+          //   if (channel.language === "en") {
+          //     this.streamName = channel.user_login;
+          //   }
+          // });
         });
     },
   },
