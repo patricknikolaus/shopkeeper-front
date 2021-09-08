@@ -9,7 +9,7 @@ import 'mdb-vue-ui-kit/css/mdb.min.css';
 
 Vue.use(VueYouTubeEmbed)
 
-axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "localhost:3000" : "https://shopkeeper-backend.herokuapp.com";
+axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "/";
 
 var jwt = localStorage.getItem("jwt");
 if (jwt) { axios.defaults.headers.common["Authorization"] = "Bearer " + jwt; }
