@@ -9,7 +9,7 @@ import 'mdb-vue-ui-kit/css/mdb.min.css';
 
 Vue.use(VueYouTubeEmbed)
 
-axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "/";
+axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://https://damp-dusk-45686.herokuapp.com";
 
 var jwt = localStorage.getItem("jwt");
 if (jwt) { axios.defaults.headers.common["Authorization"] = "Bearer " + jwt; }
