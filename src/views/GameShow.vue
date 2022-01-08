@@ -74,7 +74,7 @@
                             <div class="pt-4" v-if="twitchChannel != null">
                               <img src="../../public/static/img/twitchheader.png" width="25%" class="pb-1">
                               <iframe
-                                  :src="`https://player.twitch.tv/?channel=${streamName}&parent=localhost`"
+                                  :src="`https://player.twitch.tv/?channel=${streamName}&parent=shopkeepergg.netlify.app`"
                                   height="345"
                                   width="640"
                                   allowfullscreen="true">
