@@ -157,7 +157,8 @@
                             <div class="product-card-image">
                                 <div class="product-media">
                                     <a :href="`/games/${similar.id}`">
-                                        <img :src="similar.image_url">
+                                        <!-- <img :src="similar.image_url"> -->
+                                        {{ similar.name }}
                                     </a>
                                     <div class="product-cart-btn">
                                     </div>
