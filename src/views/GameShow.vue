@@ -157,8 +157,7 @@
                             <div class="product-card-image">
                                 <div class="product-media">
                                     <a :href="`/games/${similar.id}`">
-                                        <!-- <img :src="similar.image_url"> -->
-                                        {{ similar.name }}
+                                        <img :src="similar.image_url.replace('t_thumb', 't_1080p')">
                                     </a>
                                     <div class="product-cart-btn">
                                     </div>
@@ -245,8 +244,8 @@ export default {
     },
     getBoxarts: function () {
       this.similarGames.forEach((game) => {
-        axios.get("/covers/" + `${game.id}`).then((response) => {
-          this.$set(game, "image_url", response.data.image);
+        axios.post(`/games/${game.id}`).then((response) => {
+          this.$set(game, "image_url", response.data[0].cover.url);
         });
       });
     },
